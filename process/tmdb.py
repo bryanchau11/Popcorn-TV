@@ -11,14 +11,14 @@ URL_NO_IMAGE = (
 )
 
 
-def get_popular_movie():
+def get_popular_movie(page):
     """
     Get all information about popular movies from TheMovieDB.
     """
     tmdb_response = requests.get(
         "https://api.themoviedb.org/3/movie/popular?api_key="
         + os.getenv("API_KEY")
-        + "&language=en-US&page=1",
+        + f"&language=en-US&page={page}",
     )
     tmdb_response_json = tmdb_response.json()
 
@@ -97,7 +97,16 @@ def get_detail_movie(movie_id):
     genres = ", ".join(genres_temp)
     overview = tmdb_response_json["overview"]
 
-    return (poster_path, title, vote_average, release_date, popularity, runtime, genres, overview)
+    return (
+        poster_path,
+        title,
+        vote_average,
+        release_date,
+        popularity,
+        runtime,
+        genres,
+        overview,
+    )
 
 
 def get_search_movie(movie_name):
@@ -109,7 +118,7 @@ def get_search_movie(movie_name):
         + os.getenv("API_KEY")
         + "&language=en-US&query="
         + movie_name
-        + "&page=1&include_adult=false",
+        + "&page=1&include_adult=true",
     )
     tmdb_response_json = tmdb_response.json()
 
@@ -151,7 +160,7 @@ def get_filter_movie(movie_genre):
     tmdb_response = requests.get(
         "https://api.themoviedb.org/3/discover/movie?api_key="
         + os.getenv("API_KEY")
-        + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video="
+        + "&language=en-US&sort_by=popularity.desc&include_adult=true&include_video="
         + "false&page=1&with_genres="
         + movie_genre,
     )

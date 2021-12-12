@@ -131,7 +131,7 @@ def index():
         vote_average,
         release_date,
         popularity,
-    ) = get_popular_movie()
+    ) = get_popular_movie(1)
 
     popular_movie = [
         {
@@ -196,7 +196,36 @@ def load_user(user_name):
     Load user given an id.
     """
     return User.query.get(user_name)
-    
+
+
+@app.route("/popular_page", methods=["POST"])
+def popular_page():
+    page = flask.request.json.get("page")
+    (
+        id_movie,
+        poster_path,
+        title,
+        vote_average,
+        release_date,
+        popularity,
+    ) = get_popular_movie(page)
+
+    popular_movie = [
+        {
+            "id_movie": id_movie,
+            "poster_path": poster_path,
+            "title": title,
+            "vote_average": vote_average,
+            "release_date": release_date,
+            "popularity": popularity,
+        }
+        for id_movie, poster_path, title, vote_average, release_date, popularity in zip(
+            id_movie, poster_path, title, vote_average, release_date, popularity
+        )
+    ]
+    return flask.jsonify({"status": 200, "popular_movie": popular_movie})
+
+
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def catch_all(path):
@@ -207,6 +236,7 @@ def catch_all(path):
         [type]: [description]
     """
     return flask.redirect(flask.url_for("bp.index"))
+
 
 @app.route("/signout", methods=["POST"])
 def logout():
