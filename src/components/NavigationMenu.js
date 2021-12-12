@@ -70,6 +70,43 @@ function NavigationMenu() {
         </ul>
 
         <hr />
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <div className="nav-link">
+              <img
+                src="https://img.icons8.com/ios/32/000000/video.png"
+                alt=""
+              />
+              <div>
+                <Link to="/popularTV">Popular TV Shows</Link>
+              </div>
+            </div>
+          </li>
+          <li className="nav-item">
+            <div className="nav-link">
+              <img
+                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
+                alt=""
+              />
+              <div>
+                <Link to="/top_ratedTV">Top Rated TV Shows</Link>
+              </div>
+            </div>
+          </li>
+          <li className="nav-item">
+            <div className="nav-link">
+              <img
+                src="https://img.icons8.com/ios/32/000000/filter--v1.png"
+                alt=""
+              />
+              <div>
+                <Link to="/filterTV">Filter TV Shows</Link>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <hr />
 
         <ul className="nav flex-column mb-2">
           <li className="nav-item">

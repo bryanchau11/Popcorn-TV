@@ -1,16 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './index.css';
-import App from './App';
+import "./index.css";
+import App from "./App";
 import TopRated from "./components/TopRated";
-import Search from './components/Search';
+import Search from "./components/Search";
 import Detail from "./components/Detail";
 import Filter from "./components/Filter";
-import Favorite from './components/Favorite';
-import Contact from './components/Contact';
-import Settings from './components/Settings';
-import reportWebVitals from './reportWebVitals';
+import Favorite from "./components/Favorite";
+import Contact from "./components/Contact";
+import Settings from "./components/Settings";
+import PopularTV from "./components/TV/PopularTV";
+import TopRatedTV from "./components/TV/TopRatedTV";
+import FilterTV from "./components/TV/FilterTV";
+import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -23,9 +26,13 @@ ReactDOM.render(
       <Route path="/favorite" element={<Favorite />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/settings" element={<Settings />} />
+
+      <Route path="/popularTV" element={<PopularTV />} />
+      <Route path="/top_ratedTV" element={<TopRatedTV />} />
+      <Route path="/filterTV" element={<FilterTV />} />
     </Routes>
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
