@@ -1,15 +1,20 @@
 {
-  "name": "project2-kbat",
+  "name": "popcorn-tv",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.3",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.24.0",
     "emailjs-com": "^3.2.0",
     "history": "^5.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-paginate": "^8.1.0",
     "react-rating-stars-component": "^2.2.0",
     "react-router": "^6.0.1",
     "react-router-dom": "^6.0.1",
@@ -47,6 +52,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^2.5.1"
   }
 }

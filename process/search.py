@@ -14,6 +14,7 @@ def get_search():
     otherwise returns the movies related to the keyword.
     """
     movie_name = flask.request.json.get("movie_name")
+    page = flask.request.json.get("page")
     (
         exist_search_movie,
         id_movie,
@@ -22,7 +23,7 @@ def get_search():
         vote_average,
         release_date,
         popularity,
-    ) = get_search_movie(movie_name)
+    ) = get_search_movie(movie_name, page)
 
     search_movie = [
         {
