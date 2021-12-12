@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
-
+var axios = require("axios").default;
 function TopRated() {
   const args = JSON.parse(document.getElementById("data").text);
   const location = useLocation();
@@ -26,6 +26,23 @@ function TopRated() {
         setMovieList(data.top_rated_movie);
       });
   }, [page]);
+  const [count, setCount] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data.total_pages;
+        console.log(response.data.total_pages);
+        setCount(result);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
   return (
     <div className="TopRated">
       <div className="container p-0">
@@ -76,7 +93,7 @@ function TopRated() {
               </div>
               <Pagination
                 page={page}
-                count={100}
+                count={count}
                 renderItem={(item) => (
                   <PaginationItem
                     component={Link}

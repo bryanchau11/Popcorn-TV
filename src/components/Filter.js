@@ -61,6 +61,23 @@ function Filter() {
         console.error(error);
       });
   }, []);
+  const [count, setCount] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data.total_pages;
+        console.log(response.data.total_pages);
+        setCount(result);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [genre]);
   return (
     <div className="Favorite">
       <div className="container p-0">
@@ -127,7 +144,7 @@ function Filter() {
               </div>
               <Pagination
                 page={page}
-                count={20}
+                count={count}
                 renderItem={(item) => (
                   <PaginationItem
                     component={Link}

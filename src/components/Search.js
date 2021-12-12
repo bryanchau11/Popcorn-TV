@@ -4,6 +4,7 @@ import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+var axios = require("axios").default;
 function Search() {
   const { movieName } = useParams();
   const [searchMovie, setSearchMovie] = useState([]);
@@ -29,7 +30,23 @@ function Search() {
         setExistMovie(result.exist_search_movie);
       });
   }, [movieName, page]);
-
+  const [count, setCount] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&query=${movieName}&page=1&include_adult=false`
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data.total_pages;
+        console.log(response.data.total_pages);
+        setCount(result);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [movieName]);
   return (
     <div className="Search">
       {existMovie ? (
@@ -68,7 +85,7 @@ function Search() {
                               <span>{item.release_date}</span>
                             </div>
                             <div className="movie-running-time">
-                              <div className="text">Popularity</div>
+                              <div className="text">Movie Type</div>
                               <span>{item.popularity}</span>
                             </div>
                           </div>
@@ -79,7 +96,7 @@ function Search() {
                 </div>
                 <Pagination
                   page={page}
-                  count={4}
+                  count={count}
                   renderItem={(item) => (
                     <PaginationItem
                       component={Link}
