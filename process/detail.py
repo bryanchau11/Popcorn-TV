@@ -12,7 +12,7 @@ def get_detail():
     Based on the id of each movie to get all the information about that movie.
     """
     movie_id = flask.request.json.get("movie_id")
-    page = flask.request.json.get("page")
+
     (
         poster_path,
         title,
@@ -22,7 +22,7 @@ def get_detail():
         runtime,
         genres,
         overview,
-    ) = get_detail_movie(movie_id, page)
+    ) = get_detail_movie(movie_id)
 
     detail_movie = {
         "poster_path": poster_path,
