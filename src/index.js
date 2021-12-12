@@ -13,6 +13,7 @@ import Settings from "./components/Settings";
 import PopularTV from "./components/TV/PopularTV";
 import TopRatedTV from "./components/TV/TopRatedTV";
 import FilterTV from "./components/TV/FilterTV";
+import DetailTV from "./components/TV/DetailTV";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -30,6 +31,7 @@ ReactDOM.render(
       <Route path="/popularTV" element={<PopularTV />} />
       <Route path="/top_ratedTV" element={<TopRatedTV />} />
       <Route path="/filterTV" element={<FilterTV />} />
+      <Route path="/detailTV/:tvID" element={<DetailTV />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")

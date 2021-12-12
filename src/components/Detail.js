@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import "../style/Detail.css";
 import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
+import axios from "axios";
 
 function Detail() {
   const { movieID } = useParams();
@@ -145,7 +146,40 @@ function Detail() {
         setAvgRating(result);
       });
   }
-
+  // Get Movie Cast
+  const [cast, setCast] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    };
+    const lst = [];
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data.cast;
+        let pic = null;
+        for (var i = 0; i < result.length; i++) {
+          if (result[i]["profile_path"] == null) {
+            pic =
+              "https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png";
+          } else {
+            pic = "https://image.tmdb.org/t/p/w200" + result[i]["profile_path"];
+          }
+          lst.push({
+            id_cast: result[i]["id"],
+            profile_path: pic,
+            popularity: result[i]["popularity"],
+            character: result[i]["character"],
+            name: result[i]["original_name"]
+          });
+        }
+        setCast(lst);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [movieID]);
   return (
     <div className="Detail">
       <div className="container p-0">
@@ -182,15 +216,56 @@ function Detail() {
                   />
                 </div>
               </div>
-              <iframe
-                title="movie"
-                src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
-                width="650"
-                height="400"
-                allow="fullscreen"
-              />
+              <div
+                className="movie_card"
+                id="bright"
+                style={{ width: "1000px", height: "700px" }}
+              >
+                <iframe
+                  title="movie"
+                  src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
+                  width="1000"
+                  height="700"
+                  allow="fullscreen"
+                />
+              </div>
               <hr />
 
+              <div className="pt-8 pb-2 mb-3 border-bottom">
+                <div className="row">
+                  <h1>Cast</h1>
+                </div>
+                <div className="scrollmenu">
+                  {cast
+                    ? cast.map((item) => (
+                        <div className="card-view">
+                          <div className="card-header">
+                            <Link to={`/detail/${item.id_cast}`}>
+                              <img
+                                src={item.profile_path}
+                                alt=""
+                                style={{ width: "180px" }}
+                              />
+                            </Link>
+                          </div>
+                          <div className="card-movie-content">
+                            <div className="card-movie-content-head">
+                              <h2 className="card-movie-title">{item.name}</h2>
+                            </div>
+                            <div className="card-movie-info">
+                              <div className="movie-running-time">
+                                <div className="text">Character</div>
+                                <span>{item.character}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    : ""}
+                </div>
+              </div>
+
+              <hr />
               <div>
                 <div>Favorite:</div>
                 <button
@@ -234,29 +309,6 @@ function Detail() {
                   >
                     Post
                   </button>
-                </div>
-              </div>
-
-              <hr />
-
-              <div className="col-sm-3">
-                <div className="rating-block">
-                  <h4>Average user rating</h4>
-                  <h2 className="bold padding-bottom-7">
-                    <strong>{avgRating}</strong> <small>/ 5</small>
-                  </h2>
-                  {[...Array(avgRating)].map(() => (
-                    <img
-                      src="https://img.icons8.com/fluency/24/000000/star.png"
-                      alt=""
-                    />
-                  ))}
-                  {[...Array(5 - avgRating)].map(() => (
-                    <img
-                      src="https://img.icons8.com/color/24/000000/star--v1.png"
-                      alt=""
-                    />
-                  ))}
                 </div>
               </div>
 

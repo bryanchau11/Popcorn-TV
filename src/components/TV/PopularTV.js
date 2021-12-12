@@ -81,7 +81,7 @@ function PopularTV() {
                     ? movieList.map((item) => (
                         <div className="card-view">
                           <div className="card-header">
-                            <Link to={`/detail/${item.id_movie}`}>
+                            <Link to={`/detailTV/${item.id_movie}`}>
                               <img
                                 src={item.poster_path}
                                 alt=""
