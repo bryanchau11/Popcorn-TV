@@ -154,7 +154,7 @@ def index():
         vote_average,
         release_date,
         popularity,
-    ) = get_top_rated_movie()
+    ) = get_top_rated_movie(1)
 
     top_rated_movie = [
         {
@@ -196,6 +196,34 @@ def load_user(user_name):
     Load user given an id.
     """
     return User.query.get(user_name)
+
+
+@app.route("/top_rate_movie_page", methods=["POST"])
+def top_rate_movie_page():
+    page = flask.request.json.get("page")
+    (
+        id_movie,
+        poster_path,
+        title,
+        vote_average,
+        release_date,
+        popularity,
+    ) = get_top_rated_movie(page)
+
+    top_rated_movie = [
+        {
+            "id_movie": id_movie,
+            "poster_path": poster_path,
+            "title": title,
+            "vote_average": vote_average,
+            "release_date": release_date,
+            "popularity": popularity,
+        }
+        for id_movie, poster_path, title, vote_average, release_date, popularity in zip(
+            id_movie, poster_path, title, vote_average, release_date, popularity
+        )
+    ]
+    return flask.jsonify({"status": 200, "top_rated_movie": top_rated_movie})
 
 
 @app.route("/popular_page", methods=["POST"])

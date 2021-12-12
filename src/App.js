@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Link,
-  MemoryRouter,
-  Route,
-  Routes,
-  useLocation
-} from "react-router-dom";
-import ReactPaginate from "react-paginate";
+import { Link, useLocation } from "react-router-dom";
 import "./style/bootstrap.min.css";
 import "./App.css";
 import SearchBar from "./components/SearchBar";

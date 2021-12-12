@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import "../style/Detail.css";
-import ToolBar from "./Toolbar";
+import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 
 function Detail() {
@@ -149,7 +149,7 @@ function Detail() {
   return (
     <div className="Detail">
       <div className="container p-0">
-        <ToolBar />
+        <SearchBar />
         <div className="container-fluid">
           <div className="row">
             <NavigationMenu />

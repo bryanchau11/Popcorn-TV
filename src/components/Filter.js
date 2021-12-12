@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../style/Filter.css";
-import ToolBar from "./Toolbar";
+import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 
 var axios = require("axios").default;
@@ -46,7 +46,7 @@ function Filter() {
   return (
     <div className="Favorite">
       <div className="container p-0">
-        <ToolBar />
+        <SearchBar />
         <div className="container-fluid">
           <div className="row">
             <NavigationMenu />
