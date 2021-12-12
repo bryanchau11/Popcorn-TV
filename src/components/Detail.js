@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import ReactStars from 'react-rating-stars-component';
-import '../style/Detail.css';
-import ToolBar from './Toolbar';
-import NavigationMenu from './NavigationMenu';
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
+import "../style/Detail.css";
+import ToolBar from "./Toolbar";
+import NavigationMenu from "./NavigationMenu";
 
 function Detail() {
   const { movieID } = useParams();
@@ -16,10 +16,10 @@ function Detail() {
 
   const toggleLiked = () => {
     if (liked === false) {
-      fetch('/liked', {
-        method: 'POST',
+      fetch("/liked", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           movie_id: movieID,
@@ -27,64 +27,72 @@ function Detail() {
           title: detailMovie.title,
           vote_average: detailMovie.vote_average,
           release_date: detailMovie.release_date,
-          popularity: detailMovie.popularity,
-        }),
+          popularity: detailMovie.popularity
+        })
       });
     } else {
-      fetch('/unliked', {
-        method: 'POST',
+      fetch("/unliked", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ movie_id: movieID }),
+        body: JSON.stringify({ movie_id: movieID })
       });
     }
     setLiked(!liked);
   };
 
   useEffect(() => {
-    fetch('/detail', {
-      method: 'POST',
+    fetch("/detail", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID }),
-    }).then((response) => response.json()).then((data) => {
-      const result = JSON.parse(data.detail);
-      setDetailMovie(result);
-    });
+      body: JSON.stringify({ movie_id: movieID })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const result = JSON.parse(data.detail);
+        setDetailMovie(result);
+      });
 
-    fetch('/check_liked', {
-      method: 'POST',
+    fetch("/check_liked", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID }),
-    }).then((response) => response.json()).then((data) => {
-      setLiked(data.check);
-    });
+      body: JSON.stringify({ movie_id: movieID })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLiked(data.check);
+      });
 
-    fetch('/avg_rating', {
-      method: 'POST',
+    fetch("/avg_rating", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID }),
-    }).then((response) => response.json()).then((data) => {
-      const result = JSON.parse(data.avg_rating);
-      setAvgRating(result);
-    });
+      body: JSON.stringify({ movie_id: movieID })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const result = JSON.parse(data.avg_rating);
+        setAvgRating(result);
+      });
 
-    fetch('/all_comment', {
-      method: 'POST',
+    fetch("/all_comment", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID }),
-    }).then((response) => response.json()).then((data) => {
-      const result = JSON.parse(data.all_comment);
-      setNewComment(result.comment);
-    });
+      body: JSON.stringify({ movie_id: movieID })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const result = JSON.parse(data.all_comment);
+        setNewComment(result.comment);
+      });
   }, []);
 
   const ratingChanged = (newRating) => {
@@ -104,36 +112,38 @@ function Detail() {
       date: dateComment,
       hour: hourComment,
       comment: newItem,
-      rating: ratingMovie,
+      rating: ratingMovie
     });
     setNewComment(newListComment);
 
-    textInput.current.value = '';
+    textInput.current.value = "";
 
-    fetch('/comment', {
-      method: 'POST',
+    fetch("/comment", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         movie_id: movieID,
         comment_movie: newItem,
         date: dateComment,
         hour: hourComment,
-        rating: ratingMovie,
-      }),
+        rating: ratingMovie
+      })
     });
 
-    fetch('/avg_rating', {
-      method: 'POST',
+    fetch("/avg_rating", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID }),
-    }).then((response) => response.json()).then((data) => {
-      const result = JSON.parse(data.avg_rating);
-      setAvgRating(result);
-    });
+      body: JSON.stringify({ movie_id: movieID })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const result = JSON.parse(data.avg_rating);
+        setAvgRating(result);
+      });
   }
 
   return (
@@ -143,18 +153,21 @@ function Detail() {
         <div className="container-fluid">
           <div className="row">
             <NavigationMenu />
-            <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list">
+            <main
+              role="main"
+              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+            >
               <div className="movie_card" id="bright">
                 <div className="info_section">
                   <div className="movie_header">
-                    <img className="locandina" src={detailMovie.poster_path} alt="" />
+                    <img
+                      className="locandina"
+                      src={detailMovie.poster_path}
+                      alt=""
+                    />
                     <h1>{detailMovie.title}</h1>
                     <h4>{detailMovie.release_date}</h4>
-                    <span className="minutes">
-                      {detailMovie.runtime}
-                      {' '}
-                      min
-                    </span>
+                    <span className="minutes">{detailMovie.runtime} min</span>
                     <p className="type">{detailMovie.genres}</p>
                   </div>
                   <div className="movie_desc">
@@ -162,29 +175,65 @@ function Detail() {
                   </div>
                 </div>
                 <div>
-                  <img className="blur_back bright_back" src={detailMovie.poster_path} alt="" />
+                  <img
+                    className="blur_back bright_back"
+                    src={detailMovie.poster_path}
+                    alt=""
+                  />
                 </div>
               </div>
-
+              <iframe
+                title="movie"
+                src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
+                width="650"
+                height="400"
+                allow="fullscreen"
+              />
               <hr />
 
               <div>
                 <div>Favorite:</div>
-                <button className="likedMovie" onClick={toggleLiked} type="button">
+                <button
+                  className="likedMovie"
+                  onClick={toggleLiked}
+                  type="button"
+                >
                   {liked ? (
-                    <img src="https://img.icons8.com/color/24/000000/filled-like.png" alt="" />
+                    <img
+                      src="https://img.icons8.com/color/24/000000/filled-like.png"
+                      alt=""
+                    />
                   ) : (
-                    <img src="https://img.icons8.com/material-outlined/24/000000/like--v1.png" alt="" />
+                    <img
+                      src="https://img.icons8.com/material-outlined/24/000000/like--v1.png"
+                      alt=""
+                    />
                   )}
                 </button>
                 <div>Rating:</div>
-                <ReactStars count={5} onChange={ratingChanged} size={24} activeColor="#ffd700" />
+                <ReactStars
+                  count={5}
+                  onChange={ratingChanged}
+                  size={24}
+                  activeColor="#ffd700"
+                />
                 <div>Comment:</div>
                 <div className="textarea">
-                  <textarea cols="110" rows="5" ref={textInput} placeholder="Add comment..." />
+                  <textarea
+                    cols="110"
+                    rows="5"
+                    ref={textInput}
+                    placeholder="Add comment..."
+                  />
                 </div>
                 <div className="btn">
-                  <button className="btn btn-primary" onClick={addComment} type="submit">Post</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={addComment}
+                    type="submit"
+                  >
+                    Post
+                  </button>
                 </div>
               </div>
 
@@ -194,15 +243,19 @@ function Detail() {
                 <div className="rating-block">
                   <h4>Average user rating</h4>
                   <h2 className="bold padding-bottom-7">
-                    <strong>{avgRating}</strong>
-                    {' '}
-                    <small>/ 5</small>
+                    <strong>{avgRating}</strong> <small>/ 5</small>
                   </h2>
                   {[...Array(avgRating)].map(() => (
-                    <img src="https://img.icons8.com/fluency/24/000000/star.png" alt="" />
+                    <img
+                      src="https://img.icons8.com/fluency/24/000000/star.png"
+                      alt=""
+                    />
                   ))}
                   {[...Array(5 - avgRating)].map(() => (
-                    <img src="https://img.icons8.com/color/24/000000/star--v1.png" alt="" />
+                    <img
+                      src="https://img.icons8.com/color/24/000000/star--v1.png"
+                      alt=""
+                    />
                   ))}
                 </div>
               </div>
@@ -213,7 +266,10 @@ function Detail() {
                     <hr />
                     <div className="row">
                       <div className="col-sm-3">
-                        <img src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/60/000000/external-user-interface-kiranshastry-solid-kiranshastry.png" alt="" />
+                        <img
+                          src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/60/000000/external-user-interface-kiranshastry-solid-kiranshastry.png"
+                          alt=""
+                        />
                         <div className="review-block-name">{item.name}</div>
                         <div className="review-block-date">
                           {item.date}
@@ -224,10 +280,15 @@ function Detail() {
                       <div className="col-sm-9">
                         <div className="review-block-rate">
                           {[...Array(item.rating)].map(() => (
-                            <img src="https://img.icons8.com/fluency/24/000000/star.png" alt="" />
+                            <img
+                              src="https://img.icons8.com/fluency/24/000000/star.png"
+                              alt=""
+                            />
                           ))}
                         </div>
-                        <div className="review-block-description">{item.comment}</div>
+                        <div className="review-block-description">
+                          {item.comment}
+                        </div>
                       </div>
                     </div>
                   </div>
