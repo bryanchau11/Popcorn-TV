@@ -169,12 +169,18 @@ def index():
             id_movie, poster_path, title, vote_average, release_date, popularity
         )
     ]
-
-    movie_data = {
-        "popular_movie": popular_movie,
-        "top_rated_movie": top_rated_movie,
-        "username": current_user.username,
-    }
+    try:
+        movie_data = {
+            "popular_movie": popular_movie,
+            "top_rated_movie": top_rated_movie,
+            "username": current_user.username,
+        }
+    except:
+        movie_data = {
+            "popular_movie": popular_movie,
+            "top_rated_movie": top_rated_movie,
+            "username": "",
+        }
     data = json.dumps(movie_data)
 
     return flask.render_template(
@@ -267,12 +273,18 @@ def catch_all(path):
 
 
 @app.route("/signout", methods=["POST"])
+def login_asSignOut():
+
+    return flask.redirect(flask.url_for("login"))
+
+
+@app.route("/signout1", methods=["POST"])
 def logout():
     """
     Log out of the current account and return to the login page.
     """
     logout_user()
-    return flask.redirect(flask.url_for("login"))
+    return flask.redirect(flask.url_for("bp.index"))
 
 
 @app.route("/signup")
@@ -337,10 +349,13 @@ def main():
     """
     If the user has logged in before, it will go to the index page.
     Otherwise, it will stay at the login page.
-    """
+
+
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
     return flask.redirect(flask.url_for("login"))
+    """
+    return flask.redirect(flask.url_for("bp.index"))
 
 
 @app.route("/search", methods=["POST"])
@@ -357,7 +372,7 @@ def detail():
     """
     Get all details of a movie.
     """
-    data = get_detail(current_user.username)
+    data = get_detail()
     return flask.jsonify({"status": 200, "detail": data})
 
 
@@ -568,7 +583,10 @@ def get_username():
     """
     Get current username from database.
     """
-    username = current_user.username
+    try:
+        username = current_user.username
+    except:
+        username = ""
     return flask.jsonify({"status": 200, "username": username})
 
 

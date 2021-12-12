@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function NavigationMenu() {
-  const [name, setName] = useState('');
-
+  const [name, setName] = useState("");
+  const [flag, setFlag] = useState(true);
   useEffect(() => {
-    fetch('/get_username', {
-      method: 'POST',
+    fetch("/get_username", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => response.json()).then((data) => {
-      setName(data.username);
-    });
+        "Content-Type": "application/json"
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setName(data.username);
+        if (data.username == "") {
+          setFlag(false);
+        }
+      });
   }, []);
 
   return (
@@ -21,11 +26,7 @@ function NavigationMenu() {
         <ul className="nav flex-column">
           <li className="nav-item">
             <div className="nav-link">
-              <div>
-                Welcome,
-                {' '}
-                {name}
-              </div>
+              {flag ? <div>Welcome, {name}</div> : <div>Please login</div>}
             </div>
           </li>
         </ul>
@@ -35,7 +36,10 @@ function NavigationMenu() {
         <ul className="nav flex-column">
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/ios/32/000000/video.png" alt="" />
+              <img
+                src="https://img.icons8.com/ios/32/000000/video.png"
+                alt=""
+              />
               <div>
                 <Link to="/index">Popular Movies</Link>
               </div>
@@ -43,7 +47,10 @@ function NavigationMenu() {
           </li>
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png" alt="" />
+              <img
+                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
+                alt=""
+              />
               <div>
                 <Link to="/top_rated">Top Rated Movies</Link>
               </div>
@@ -51,7 +58,10 @@ function NavigationMenu() {
           </li>
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/ios/32/000000/filter--v1.png" alt="" />
+              <img
+                src="https://img.icons8.com/ios/32/000000/filter--v1.png"
+                alt=""
+              />
               <div>
                 <Link to="/filter">Filter Movies</Link>
               </div>
@@ -64,7 +74,10 @@ function NavigationMenu() {
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/material-outlined/32/000000/like--v1.png" alt="" />
+              <img
+                src="https://img.icons8.com/material-outlined/32/000000/like--v1.png"
+                alt=""
+              />
               <div>
                 <Link to="/favorite">Favorite Movies</Link>
               </div>
@@ -72,7 +85,10 @@ function NavigationMenu() {
           </li>
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/ios/32/000000/contact-card.png" alt="" />
+              <img
+                src="https://img.icons8.com/ios/32/000000/contact-card.png"
+                alt=""
+              />
               <div>
                 <Link to="/contact">Contact</Link>
               </div>
@@ -80,7 +96,10 @@ function NavigationMenu() {
           </li>
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/ios/32/000000/settings.png" alt="" />
+              <img
+                src="https://img.icons8.com/ios/32/000000/settings.png"
+                alt=""
+              />
               <div>
                 <Link to="/settings">Settings</Link>
               </div>
@@ -88,10 +107,23 @@ function NavigationMenu() {
           </li>
           <li className="nav-item">
             <div className="nav-link">
-              <img src="https://img.icons8.com/ios/32/000000/logout-rounded--v1.png" alt="" />
-              <form action="/signout" method="POST">
-                <button className="signOut" type="submit">Sign out</button>
-              </form>
+              <img
+                src="https://img.icons8.com/ios/32/000000/logout-rounded--v1.png"
+                alt=""
+              />
+              {flag ? (
+                <form action="/signout1" method="POST">
+                  <button className="signOut" type="submit">
+                    Sign out
+                  </button>
+                </form>
+              ) : (
+                <form action="/signout" method="POST">
+                  <button className="signOut" type="submit">
+                    Log In
+                  </button>
+                </form>
+              )}
             </div>
           </li>
         </ul>

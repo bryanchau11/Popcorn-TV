@@ -12,6 +12,7 @@ def get_filter():
     Based on the genre of the movie to get all the latest movies of that genre.
     """
     movie_genre = flask.request.json.get("movie_genre")
+    page = flask.request.json.get("page")
     (
         id_movie,
         poster_path,
@@ -19,7 +20,7 @@ def get_filter():
         vote_average,
         release_date,
         popularity,
-    ) = get_filter_movie(movie_genre)
+    ) = get_filter_movie(movie_genre, page)
 
     filter_movie = [
         {
