@@ -53,11 +53,15 @@ function DetailTV() {
       url: `https://api.themoviedb.org/3/tv/${tvID}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     };
     const lst = [];
-
+    const genreList = [];
     axios
       .request(options)
       .then(function (response) {
         const result = response.data;
+        for (var i = 0; i < result["genres"].length; i++) {
+          genreList.push(result["genres"][i]["name"]);
+        }
+
         lst.push({
           first_air_date: result["first_air_date"],
           id: result["id"],
@@ -67,7 +71,8 @@ function DetailTV() {
           poster_path:
             "https://image.tmdb.org/t/p/w200" + result["poster_path"],
           number_of_episodes: result["number_of_episodes"],
-          number_of_seasons: result["number_of_seasons"]
+          number_of_seasons: result["number_of_seasons"],
+          genres: genreList.join(", ")
         });
         setDetailTV(lst);
         console.log(lst);
@@ -225,12 +230,13 @@ function DetailTV() {
                       />
                       <h1>{detailTV[0].name}</h1>
                       <h4>{detailTV[0].first_air_date}</h4>
-                      <p className="type">
+                      <h6>
                         number of seasons: {detailTV[0].number_of_seasons}
-                      </p>
+                      </h6>
                       <span className="minutes">{detailTV[0].runtime} min</span>
                       <p className="type">{detailTV[0].genres}</p>
                     </div>
+                    <br />
                     <div className="movie_desc">
                       <p className="text">{detailTV[0].overview}</p>
                     </div>
@@ -250,13 +256,7 @@ function DetailTV() {
                 id="bright"
                 style={{ width: "1000px", height: "700px" }}
               >
-                <iframe
-                  title="movie"
-                  src={`https://www.2embed.ru/embed/tmdb/movie?id=${tvID}`}
-                  width="1000"
-                  height="700"
-                  allow="fullscreen"
-                />
+                <h1>TV SHOWS WILL BE UPDATED SOON!!!</h1>
               </div>
               <hr />
 
