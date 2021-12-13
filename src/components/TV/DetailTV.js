@@ -45,7 +45,9 @@ function DetailTV() {
     }
     setLiked(!liked);
   };
-
+  const [season, setSeason] = useState(1);
+  const [episode, setEpisode] = useState(1);
+  const [tvList, setTVList] = useState(null);
   useEffect(() => {
     // Get TV detail
     const options = {
@@ -75,9 +77,28 @@ function DetailTV() {
           genres: genreList.join(", ")
         });
         setDetailTV(lst);
-        console.log(lst);
-        console.log(lst.first_air_date);
-        console.log(lst[0].poster_path);
+        const seasonAndEpisode = [];
+        var str = "";
+        for (i = 0; i < result["seasons"].length; i++) {
+          if (
+            result["seasons"][i]["episode_count"] !== 0 &&
+            result["seasons"][i]["name"] !== "Specials"
+          ) {
+            for (var j = 0; j < result["seasons"][i]["episode_count"]; j++) {
+              str =
+                "Season: " +
+                result["seasons"][i]["season_number"] +
+                ", Episode: " +
+                (j + 1).toString();
+              seasonAndEpisode.push({
+                label: str,
+                season: i + 1,
+                episode: j + 1
+              });
+            }
+          }
+        }
+        setTVList(seasonAndEpisode);
       })
       .catch(function (error) {
         console.error(error);
@@ -206,6 +227,13 @@ function DetailTV() {
         console.error(error);
       });
   }, [tvID]);
+  function handleChange(evt) {
+    const value = evt.target.value;
+    const numStr = value.match(/\d/g).join("");
+    setSeason(parseInt(numStr[0]));
+
+    setEpisode(parseInt(numStr.substring(1)));
+  }
   return (
     <div className="Detail">
       <div className="container p-0">
@@ -231,7 +259,7 @@ function DetailTV() {
                       <h1>{detailTV[0].name}</h1>
                       <h4>{detailTV[0].first_air_date}</h4>
                       <h6>
-                        number of seasons: {detailTV[0].number_of_seasons}
+                        Number of seasons: {detailTV[0].number_of_seasons}
                       </h6>
                       <span className="minutes">{detailTV[0].runtime} min</span>
                       <p className="type">{detailTV[0].genres}</p>
@@ -256,8 +284,21 @@ function DetailTV() {
                 id="bright"
                 style={{ width: "1000px", height: "700px" }}
               >
-                <h1>TV SHOWS WILL BE UPDATED SOON!!!</h1>
+                <iframe
+                  title="movie"
+                  src={`https://www.2embed.ru/embed/tmdb/tv?id=${tvID}&s=${season}&e=${episode}`}
+                  width="1000"
+                  height="700"
+                  allow="fullscreen"
+                />
               </div>
+              <select onChange={handleChange}>
+                {tvList
+                  ? tvList.map((item) => (
+                      <option value={item.label}>{item.label}</option>
+                    ))
+                  : ""}
+              </select>
               <hr />
 
               <div className="pt-8 pb-2 mb-3 border-bottom">
