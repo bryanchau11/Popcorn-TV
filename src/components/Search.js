@@ -67,9 +67,15 @@ function Search() {
                     {searchMovie.map((item) => (
                       <div className="card-view">
                         <div className="card-header">
-                          <Link to={`/detail/${item.id_movie}`}>
-                            <img src={item.poster_path} alt="" />
-                          </Link>
+                          {item.popularity == "movie" ? (
+                            <Link to={`/detail/${item.id_movie}`}>
+                              <img src={item.poster_path} alt="" />
+                            </Link>
+                          ) : (
+                            <Link to={`/detailTV/${item.id_movie}`}>
+                              <img src={item.poster_path} alt="" />
+                            </Link>
+                          )}
                         </div>
                         <div className="card-movie-content">
                           <div className="card-movie-content-head">

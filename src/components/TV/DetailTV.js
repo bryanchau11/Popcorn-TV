@@ -1,20 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-import "../style/Detail.css";
-import SearchBar from "./SearchBar";
-import NavigationMenu from "./NavigationMenu";
+import "../../style/Detail.css";
+import "../../style/bootstrap.min.css";
+import "../../App.css";
+import SearchBar from "../SearchBar";
+
+import NavigationMenu from "../NavigationMenu";
 import axios from "axios";
 
-function Detail() {
-  const { movieID } = useParams();
-  const [detailMovie, setDetailMovie] = useState([]);
+function DetailTV() {
+  const { tvID } = useParams();
+  const [detailTV, setDetailTV] = useState([]);
   const textInput = useRef(null);
   const [ratingMovie, setRatingMovie] = useState(0);
   const [avgRating, setAvgRating] = useState(0);
   const [newComment, setNewComment] = useState([]);
   const [liked, setLiked] = useState(false);
-
+  const args = JSON.parse(document.getElementById("data").text);
   const toggleLiked = () => {
     if (liked === false) {
       fetch("/liked", {
@@ -23,12 +26,12 @@ function Detail() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          movie_id: movieID,
-          poster_path: detailMovie.poster_path,
-          title: detailMovie.title,
-          vote_average: detailMovie.vote_average,
-          release_date: detailMovie.release_date,
-          popularity: detailMovie.popularity
+          movie_id: tvID,
+          poster_path: detailTV.poster_path,
+          title: detailTV.title,
+          vote_average: detailTV.vote_average,
+          release_date: detailTV.first_air_date,
+          popularity: detailTV.popularity
         })
       });
     } else {
@@ -37,32 +40,55 @@ function Detail() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ movie_id: movieID })
+        body: JSON.stringify({ movie_id: tvID })
       });
     }
     setLiked(!liked);
   };
 
   useEffect(() => {
-    fetch("/detail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ movie_id: movieID })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const result = JSON.parse(data.detail);
-        setDetailMovie(result);
-      });
+    // Get TV detail
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/tv/${tvID}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    };
+    const lst = [];
+    const genreList = [];
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data;
+        for (var i = 0; i < result["genres"].length; i++) {
+          genreList.push(result["genres"][i]["name"]);
+        }
 
+        lst.push({
+          first_air_date: result["first_air_date"],
+          id: result["id"],
+          name: result["name"],
+          overview: result["overview"],
+          runtime: result["episode_run_time"][0],
+          poster_path:
+            "https://image.tmdb.org/t/p/w200" + result["poster_path"],
+          number_of_episodes: result["number_of_episodes"],
+          number_of_seasons: result["number_of_seasons"],
+          genres: genreList.join(", ")
+        });
+        setDetailTV(lst);
+        console.log(lst);
+        console.log(lst.first_air_date);
+        console.log(lst[0].poster_path);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    // Get TV like
     fetch("/check_liked", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID })
+      body: JSON.stringify({ movie_id: tvID })
     })
       .then((response) => response.json())
       .then((data) => {
@@ -74,7 +100,7 @@ function Detail() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID })
+      body: JSON.stringify({ movie_id: tvID })
     })
       .then((response) => response.json())
       .then((data) => {
@@ -87,14 +113,14 @@ function Detail() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID })
+      body: JSON.stringify({ movie_id: tvID })
     })
       .then((response) => response.json())
       .then((data) => {
         const result = JSON.parse(data.all_comment);
         setNewComment(result.comment);
       });
-  }, []);
+  }, [tvID]);
 
   const ratingChanged = (newRating) => {
     setRatingMovie(newRating);
@@ -109,7 +135,7 @@ function Detail() {
     const hourComment = currentdate.toLocaleTimeString();
 
     newListComment.push({
-      name: detailMovie.username,
+      name: args.username,
       date: dateComment,
       hour: hourComment,
       comment: newItem,
@@ -125,7 +151,7 @@ function Detail() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        movie_id: movieID,
+        movie_id: tvID,
         comment_movie: newItem,
         date: dateComment,
         hour: hourComment,
@@ -138,7 +164,7 @@ function Detail() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_id: movieID })
+      body: JSON.stringify({ movie_id: tvID })
     })
       .then((response) => response.json())
       .then((data) => {
@@ -146,12 +172,12 @@ function Detail() {
         setAvgRating(result);
       });
   }
-  // Get Movie Cast
+  // Get TV Cast
   const [cast, setCast] = useState(null);
   useEffect(() => {
     const options = {
       method: "GET",
-      url: `https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+      url: `https://api.themoviedb.org/3/tv/${tvID}/credits?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     };
     const lst = [];
     axios
@@ -179,7 +205,7 @@ function Detail() {
       .catch(function (error) {
         console.error(error);
       });
-  }, [movieID]);
+  }, [tvID]);
   return (
     <div className="Detail">
       <div className="container p-0">
@@ -191,43 +217,46 @@ function Detail() {
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
             >
-              <div className="movie_card" id="bright">
-                <div className="info_section">
-                  <div className="movie_header">
+              {detailTV.length == 0 ? (
+                ""
+              ) : (
+                <div className="movie_card" id="bright">
+                  <div className="info_section">
+                    <div className="movie_header">
+                      <img
+                        className="locandina"
+                        src={detailTV[0].poster_path}
+                        alt=""
+                      />
+                      <h1>{detailTV[0].name}</h1>
+                      <h4>{detailTV[0].first_air_date}</h4>
+                      <h6>
+                        number of seasons: {detailTV[0].number_of_seasons}
+                      </h6>
+                      <span className="minutes">{detailTV[0].runtime} min</span>
+                      <p className="type">{detailTV[0].genres}</p>
+                    </div>
+                    <br />
+                    <div className="movie_desc">
+                      <p className="text">{detailTV[0].overview}</p>
+                    </div>
+                  </div>
+                  <div>
                     <img
-                      className="locandina"
-                      src={detailMovie.poster_path}
+                      className="blur_back bright_back"
+                      src={detailTV[0].poster_path}
                       alt=""
                     />
-                    <h1>{detailMovie.title}</h1>
-                    <h4>{detailMovie.release_date}</h4>
-                    <span className="minutes">{detailMovie.runtime} min</span>
-                    <p className="type">{detailMovie.genres}</p>
-                  </div>
-                  <div className="movie_desc">
-                    <p className="text">{detailMovie.overview}</p>
                   </div>
                 </div>
-                <div>
-                  <img
-                    className="blur_back bright_back"
-                    src={detailMovie.poster_path}
-                    alt=""
-                  />
-                </div>
-              </div>
+              )}
+
               <div
                 className="movie_card"
                 id="bright"
                 style={{ width: "1000px", height: "700px" }}
               >
-                <iframe
-                  title="movie"
-                  src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
-                  width="1000"
-                  height="700"
-                  allow="fullscreen"
-                />
+                <h1>TV SHOWS WILL BE UPDATED SOON!!!</h1>
               </div>
               <hr />
 
@@ -354,4 +383,4 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default DetailTV;
