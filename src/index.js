@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./index.css";
+//import "./index.css";
 import App from "./App";
 import TopRated from "./components/TopRated";
 import Search from "./components/Search";
@@ -14,6 +14,7 @@ import PopularTV from "./components/TV/PopularTV";
 import TopRatedTV from "./components/TV/TopRatedTV";
 import FilterTV from "./components/TV/FilterTV";
 import DetailTV from "./components/TV/DetailTV";
+import Footer from "./components/Footer";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -33,6 +34,7 @@ ReactDOM.render(
       <Route path="/filterTV" element={<FilterTV />} />
       <Route path="/detailTV/:tvID" element={<DetailTV />} />
     </Routes>
+    <Footer />
   </BrowserRouter>,
   document.getElementById("root")
 );

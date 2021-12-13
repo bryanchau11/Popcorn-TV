@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
+import logo from "./logo2.png";
 function SearchBar() {
   const textInput = useRef(null);
   const navigate = useNavigate();
@@ -17,8 +17,17 @@ function SearchBar() {
   };
 
   return (
-    <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <div className="navbar-brand col-sm-3 col-md-2 mr-0">Popcorn TV</div>
+    <nav
+      className="navbar fixed-top flex-md-nowrap p-0 shadow"
+      style={{ backgroundColor: "black" }}
+    >
+      <div className="navbar-brand col-sm-3 col-md-2 mr-0">
+        <img
+          style={{ width: "150px", height: "100px" }}
+          src={logo}
+          alt="logo"
+        />
+      </div>
 
       <form onSubmit={searchMovie}>
         <div class="form-group">
