@@ -1,6 +1,7 @@
 import "../style/Footer.css";
 import logo from "./logo2.png";
-
+import React from "react";
+import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
@@ -42,20 +43,25 @@ function Footer() {
               <div className="col-xl-4 col-lg-4 mb-50">
                 <div className="footer-widget">
                   <div className="footer-logo">
-                     
-                      <img src={logo} alt="logo" />
-                    
+                    <img src={logo} alt="logo" />
                   </div>
                   <div className="footer-text">
                     <p>
-                      Lorem ipsum dolor sit amet, consec tetur adipisicing elit,
-                      sed do eiusmod tempor incididuntut consec tetur
-                      adipisicing elit,Lorem ipsum dolor sit amet.
+                      <Link to={"/disclaimer"} className="disclaimer">
+                        {" "}
+                        Disclaimer:{" "}
+                      </Link>{" "}
+                      No video file is hosted on Popcorn TV, all the files are
+                      uploaded by non affiliated uploaders on file-sharing
+                      hosts.
                     </p>
                   </div>
                   <div className="footer-social-icon">
                     <span>Follow us</span>
-                    <a href="https://www.linkedin.com/in/bryan-chau-095a13161/" target="_blank">
+                    <a
+                      href="https://www.linkedin.com/in/bryan-chau-095a13161/"
+                      target="_blank"
+                    >
                       <i className="fab fa-linkedin linkedin-bg"></i>
                     </a>
                     <a href="https://github.com/bryanchau11" target="_blank">
@@ -137,7 +143,10 @@ function Footer() {
                 <div className="copyright-text">
                   <p>
                     Copyright &copy; 2021, All Right Reserved{" "}
-                    <a href="https://www.linkedin.com/in/bryan-chau-095a13161/" target="_blank">
+                    <a
+                      href="https://www.linkedin.com/in/bryan-chau-095a13161/"
+                      target="_blank"
+                    >
                       Popcorn TV
                     </a>
                   </p>
@@ -156,7 +165,7 @@ function Footer() {
                       <a href="#">Privacy</a>
                     </li>
                     <li>
-                      <a href="#">Contact</a>
+                      <Link to={"/disclaimer"}>Disclaimer</Link>
                     </li>
                   </ul>
                 </div>

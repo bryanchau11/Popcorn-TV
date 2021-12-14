@@ -244,6 +244,7 @@ function DetailTV() {
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              style={{ paddingTop: "50px" }}
             >
               {detailTV.length == 0 ? (
                 ""

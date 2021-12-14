@@ -190,6 +190,7 @@ function Detail() {
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              style={{ paddingTop: "50px" }}
             >
               <div className="movie_card" id="bright">
                 <div className="info_section">

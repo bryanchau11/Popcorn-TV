@@ -15,6 +15,7 @@ import TopRatedTV from "./components/TV/TopRatedTV";
 import FilterTV from "./components/TV/FilterTV";
 import DetailTV from "./components/TV/DetailTV";
 import Footer from "./components/Footer";
+import Disclaimer from "./components/Disclaimer";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
@@ -33,6 +34,8 @@ ReactDOM.render(
       <Route path="/top_ratedTV" element={<TopRatedTV />} />
       <Route path="/filterTV" element={<FilterTV />} />
       <Route path="/detailTV/:tvID" element={<DetailTV />} />
+
+      <Route path="/disclaimer" element={<Disclaimer />} />
     </Routes>
     <Footer />
   </BrowserRouter>,

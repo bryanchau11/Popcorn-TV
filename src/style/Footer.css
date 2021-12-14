@@ -108,6 +108,9 @@ ul {
 .footer-widget ul li a:hover{
   color: #ff5e14;
 }
+.disclaimer {
+  color: #ff5e14;
+}
 .footer-widget ul li a {
   color: #878787;
   text-transform: capitalize;
