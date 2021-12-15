@@ -21,11 +21,14 @@ function NavigationMenu() {
   }, []);
 
   return (
-    <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav
+      className="col-md-2 d-none d-md-block bg-light sidebar"
+      style={{ paddingTop: "50px" }}
+    >
       <div className="sidebar-sticky">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <div className="nav-link">
+            <div className="nav-link" style={{ paddingTop: "50px" }}>
               {flag ? <div>Welcome, {name}</div> : <div>Please login</div>}
             </div>
           </li>
