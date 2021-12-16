@@ -4,6 +4,7 @@ import "../../style/Filter.css";
 import "../../style/bootstrap.min.css";
 import "../../App.css";
 import SearchBar from "../SearchBar";
+import Typography from "@mui/material/Typography";
 
 import NavigationMenu from "../NavigationMenu";
 import Pagination from "@mui/material/Pagination";
@@ -26,16 +27,20 @@ function FilterTV() {
       .request(options)
       .then(function (response) {
         const result = response.data.results;
+
         for (var i = 0; i < result.length; i++) {
-          lst.push({
-            id_movie: result[i].id,
-            poster_path:
-              "https://image.tmdb.org/t/p/w200" + result[i]["poster_path"],
-            title: result[i]["original_name"],
-            vote_average: result[i]["vote_average"],
-            release_date: result[i]["first_air_date"],
-            popularity: result[i]["popularity"]
-          });
+          if (result[i]["poster_path"] !== null) {
+            lst.push({
+              id_movie: result[i].id,
+              poster_path:
+                "https://image.tmdb.org/t/p/original" +
+                result[i]["poster_path"],
+              title: result[i]["original_name"],
+              vote_average: result[i]["vote_average"],
+              release_date: result[i]["first_air_date"],
+              popularity: result[i]["overview"]
+            });
+          }
         }
         setFilterTV(lst);
       })
@@ -104,11 +109,11 @@ function FilterTV() {
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
-              style={{ paddingTop: "50px" }}
+              style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
                 <div className="row">
-                  <h1>Filter TV Shows</h1>
+                  <h1 style={{ color: "white" }}> Filter TV Shows</h1>
                 </div>
                 <div className="classic">
                   <select onChange={(event) => setGenre(event.target.value)}>
@@ -129,34 +134,49 @@ function FilterTV() {
                 <div className="row">
                   {filterTV
                     ? filterTV.map((item) => (
-                        <div className="card-view">
-                          <div className="card-header">
-                            <Link to={`/detailTV/${item.id_movie}`}>
-                              <img
-                                src={item.poster_path}
-                                alt=""
-                                style={{ width: "180px" }}
-                              />
+                        <div
+                          className="card"
+                          style={{
+                            width: "18rem",
+                            margin: "20px",
+                            padding: "0px",
+                            backgroundColor: "#3F0071",
+                            color: "white"
+                          }}
+                        >
+                          <img
+                            className="card-img-top"
+                            src={item.poster_path}
+                            alt="pic"
+                          />
+                          <div className="card-body">
+                            <h4 className="card-title">{item.title}</h4>
+
+                            <div className="containerCard">
+                              <div className="row">
+                                <div className="col-sm-4 metadata">
+                                  <i
+                                    className="fa fa-star"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <p>{item.vote_average}/10</p>
+                                </div>
+                                <div className="col-sm-8 metadata">
+                                  {item.release_date}
+                                </div>
+                              </div>
+                            </div>
+
+                            <p className="card-text">
+                              {item.popularity.substring(0, 245) + "..."}
+                            </p>
+
+                            <Link
+                              to={`/detailTV/${item.id_movie}`}
+                              className="trailer-preview"
+                            >
+                              <i className="fa fa-play" aria-hidden="true"></i>
                             </Link>
-                          </div>
-                          <div className="card-movie-content">
-                            <div className="card-movie-content-head">
-                              <h3 className="card-movie-title">{item.title}</h3>
-                              <div className="ratings">
-                                <span>{item.vote_average}</span>
-                                /10
-                              </div>
-                            </div>
-                            <div className="card-movie-info">
-                              <div className="movie-running-time">
-                                <div className="text">Release Date</div>
-                                <span>{item.release_date}</span>
-                              </div>
-                              <div className="movie-running-time">
-                                <div className="text">Popularity</div>
-                                <span>{item.popularity}</span>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       ))
@@ -166,9 +186,13 @@ function FilterTV() {
               <Pagination
                 page={page}
                 count={count}
+                size="large"
+                color="primary"
+                style={{ color: "white" }}
                 renderItem={(item) => (
                   <PaginationItem
                     component={Link}
+                    style={{ color: "white" }}
                     to={`/filterTV${
                       item.page === 1 ? "" : `?page=${item.page}`
                     }`}
@@ -176,6 +200,7 @@ function FilterTV() {
                   />
                 )}
               />
+              <Typography style={{ color: "white" }}>Page: {page}</Typography>
             </main>
           </div>
         </div>

@@ -31,7 +31,7 @@ function TopRatedTV() {
           lst.push({
             id_movie: result[i].id,
             poster_path:
-              "https://image.tmdb.org/t/p/w200" + result[i]["poster_path"],
+              "https://image.tmdb.org/t/p/original" + result[i]["poster_path"],
             title: result[i]["original_name"],
             vote_average: result[i]["vote_average"],
             release_date: result[i]["first_air_date"],
