@@ -134,35 +134,38 @@ def get_search_movie(movie_name, page):
     vote_average = []
     release_date = []
     media_type = []
-
+    overview = []
     for i in range(len(tmdb_response_json["results"])):
         if (
             "backdrop_path" in tmdb_response_json["results"][i]
             and "release_date" in tmdb_response_json["results"][i]
             or "first_air_date" in tmdb_response_json["results"][i]
         ):
-            id_movie.append(tmdb_response_json["results"][i]["id"])
-            if tmdb_response_json["results"][i]["poster_path"] is None:
-                poster_path.append(URL_NO_IMAGE)
-            else:
-                poster_path.append(
-                    "".join(
-                        [URL_IMAGE, tmdb_response_json["results"][i]["poster_path"]]
+            if tmdb_response_json["results"][i]["poster_path"] is not None:
+                id_movie.append(tmdb_response_json["results"][i]["id"])
+                pic = tmdb_response_json["results"][i]["poster_path"]
+                poster_path.append(f"https://image.tmdb.org/t/p/original{pic}")
+                if tmdb_response_json["results"][i]["media_type"] == "movie":
+                    title.append(tmdb_response_json["results"][i]["title"])
+                    vote_average.append(
+                        tmdb_response_json["results"][i]["vote_average"]
                     )
-                )
+                    release_date.append(
+                        tmdb_response_json["results"][i]["release_date"]
+                    )
+                    media_type.append(tmdb_response_json["results"][i]["media_type"])
+                    overview.append(tmdb_response_json["results"][i]["overview"])
+                elif tmdb_response_json["results"][i]["media_type"] == "tv":
+                    title.append(tmdb_response_json["results"][i]["name"])
+                    vote_average.append(
+                        tmdb_response_json["results"][i]["vote_average"]
+                    )
+                    release_date.append(
+                        tmdb_response_json["results"][i]["first_air_date"]
+                    )
+                    media_type.append(tmdb_response_json["results"][i]["media_type"])
+                    overview.append(tmdb_response_json["results"][i]["overview"])
 
-            if tmdb_response_json["results"][i]["media_type"] == "movie":
-                title.append(tmdb_response_json["results"][i]["title"])
-                vote_average.append(tmdb_response_json["results"][i]["vote_average"])
-                release_date.append(tmdb_response_json["results"][i]["release_date"])
-                media_type.append(tmdb_response_json["results"][i]["media_type"])
-            elif tmdb_response_json["results"][i]["media_type"] == "tv":
-                title.append(tmdb_response_json["results"][i]["original_name"])
-                vote_average.append(tmdb_response_json["results"][i]["vote_average"])
-                release_date.append(tmdb_response_json["results"][i]["first_air_date"])
-                media_type.append(tmdb_response_json["results"][i]["media_type"])
-            else:
-                pass
     return (
         exist_search_movie,
         id_movie,
@@ -171,6 +174,7 @@ def get_search_movie(movie_name, page):
         vote_average,
         release_date,
         media_type,
+        overview,
     )
 
 

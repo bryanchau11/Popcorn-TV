@@ -3,7 +3,10 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 import Pagination from "@mui/material/Pagination";
+import "../style/Search.css";
 import PaginationItem from "@mui/material/PaginationItem";
+import Typography from "@mui/material/Typography";
+
 var axios = require("axios").default;
 function Search() {
   const { movieName } = useParams();
@@ -58,55 +61,81 @@ function Search() {
               <main
                 role="main"
                 className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
-                style={{ paddingTop: "50px" }}
+                style={{ paddingTop: "50px", backgroundColor: "#150050" }}
               >
                 <div className="pt-8 pb-2 mb-3 border-bottom">
                   <div className="row">
-                    <h1>Search Movies</h1>
+                    <h1 style={{ color: "white" }}>Search Movies</h1>
                   </div>
                   <div className="row">
                     {searchMovie.map((item) => (
-                      <div className="card-view">
-                        <div className="card-header">
+                      <div
+                        className="card"
+                        style={{
+                          width: "18rem",
+                          margin: "20px",
+                          padding: "0px",
+                          backgroundColor: "#3F0071",
+                          color: "white"
+                        }}
+                      >
+                        <img
+                          className="card-img-top"
+                          src={item.poster_path}
+                          alt="pic"
+                        />
+                        <div className="card-body">
+                          <h4 className="card-title">{item.title} </h4>
+
+                          <div className="containerCard">
+                            <div className="row">
+                              <div className="col-sm-4 metadata">
+                                <i
+                                  className="fa fa-star"
+                                  aria-hidden="true"
+                                ></i>
+                                <p>{item.vote_average}/10</p>
+                              </div>
+                              <div className="col-sm-8 metadata">
+                                {item.release_date}
+                              </div>
+                            </div>
+                          </div>
+
+                          <p className="card-text">
+                            {item.overview.substring(0, 245) + "..."}
+                          </p>
+
                           {item.popularity == "movie" ? (
-                            <Link to={`/detail/${item.id_movie}`}>
-                              <img src={item.poster_path} alt="" />
+                            <Link
+                              to={`/detail/${item.id_movie}`}
+                              className="trailer-preview"
+                            >
+                              <i className="fa fa-play" aria-hidden="true"></i>
                             </Link>
                           ) : (
-                            <Link to={`/detailTV/${item.id_movie}`}>
-                              <img src={item.poster_path} alt="" />
+                            <Link
+                              to={`/detailTV/${item.id_movie}`}
+                              className="trailer-preview"
+                            >
+                              <i className="fa fa-play" aria-hidden="true"></i>
                             </Link>
                           )}
-                        </div>
-                        <div className="card-movie-content">
-                          <div className="card-movie-content-head">
-                            <h3 className="card-movie-title">{item.title}</h3>
-                            <div className="ratings">
-                              <span>{item.vote_average}</span>
-                              /10
-                            </div>
-                          </div>
-                          <div className="card-movie-info">
-                            <div className="movie-running-time">
-                              <div className="text">Release Date</div>
-                              <span>{item.release_date}</span>
-                            </div>
-                            <div className="movie-running-time">
-                              <div className="text">Movie Type</div>
-                              <span>{item.popularity}</span>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
                 <Pagination
+                  style={{ color: "white" }}
                   page={page}
                   count={count}
+                  size="large"
+                  color="primary"
                   renderItem={(item) => (
                     <PaginationItem
                       component={Link}
+                      style={{ color: "white" }}
                       to={`/search/${movieName}${
                         item.page === 1 ? "" : `?page=${item.page}`
                       }`}
@@ -114,6 +143,7 @@ function Search() {
                     />
                   )}
                 />
+                <Typography style={{ color: "white" }}>Page: {page}</Typography>
               </main>
             </div>
           </div>
@@ -127,19 +157,26 @@ function Search() {
               <main
                 role="main"
                 className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+                style={{ paddingTop: "50px", backgroundColor: "#150050" }}
               >
                 <div className="pt-8 pb-2 mb-3 border-bottom">
                   <div className="row">
-                    <h1>Search Movies</h1>
+                    <h1 style={{ color: "white" }}>Search Movies</h1>
                   </div>
-                  <h2>There are no movies that matched your query!!!</h2>
+                  <h2 style={{ color: "white" }}>
+                    There are no movies that matched your query!!!
+                  </h2>
                 </div>
                 <Pagination
+                  style={{ color: "white" }}
                   page={page}
-                  count={4}
+                  count={count}
+                  size="large"
+                  color="primary"
                   renderItem={(item) => (
                     <PaginationItem
                       component={Link}
+                      style={{ color: "white" }}
                       to={`/search/${movieName}${
                         item.page === 1 ? "" : `?page=${item.page}`
                       }`}
@@ -147,6 +184,7 @@ function Search() {
                     />
                   )}
                 />
+                <Typography style={{ color: "white" }}>Page: {page}</Typography>
               </main>
             </div>
           </div>

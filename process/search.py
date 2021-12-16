@@ -23,6 +23,7 @@ def get_search():
         vote_average,
         release_date,
         popularity,
+        overview,
     ) = get_search_movie(movie_name, page)
 
     search_movie = [
@@ -33,14 +34,16 @@ def get_search():
             "vote_average": vote_average,
             "release_date": release_date,
             "popularity": popularity,
+            "overview": overview,
         }
-        for id_movie, poster_path, title, vote_average, release_date, popularity in zip(
+        for id_movie, poster_path, title, vote_average, release_date, popularity, overview in zip(
             id_movie,
             poster_path,
             title,
             vote_average,
             release_date,
             popularity,
+            overview,
         )
     ]
 
