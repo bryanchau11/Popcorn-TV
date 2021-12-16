@@ -90,8 +90,8 @@ def get_detail_movie(movie_id):
     tmdb_response_json = tmdb_response.json()
 
     genres_temp = []
-
-    poster_path = "".join([URL_IMAGE, tmdb_response_json["poster_path"]])
+    pic = tmdb_response_json["poster_path"]
+    poster_path = f"https://image.tmdb.org/t/p/original{pic}"
     title = tmdb_response_json["title"]
     vote_average = tmdb_response_json["vote_average"]
     release_date = tmdb_response_json["release_date"]

@@ -122,7 +122,9 @@ function NavigationMenu() {
                 alt=""
               />
               <div>
-                <Link to="/favorite">Favorite Movies</Link>
+                <Link to="/favorite" style={{ pointerEvents: "none" }}>
+                  Favorite Movies (underdeveloped)
+                </Link>
               </div>
             </div>
           </li>
@@ -156,13 +158,21 @@ function NavigationMenu() {
               />
               {flag ? (
                 <form action="/signout1" method="POST">
-                  <button className="signOut" type="submit">
+                  <button
+                    className="signOut"
+                    type="submit"
+                    style={{ color: "white" }}
+                  >
                     Sign out
                   </button>
                 </form>
               ) : (
                 <form action="/signout" method="POST">
-                  <button className="signOut" type="submit">
+                  <button
+                    className="signOut"
+                    type="submit"
+                    style={{ color: "white" }}
+                  >
                     Log In
                   </button>
                 </form>
