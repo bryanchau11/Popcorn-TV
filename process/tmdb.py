@@ -67,13 +67,12 @@ def get_top_rated_movie(page):
 
     for i in range(len(tmdb_response_json["results"])):
         id_movie.append(tmdb_response_json["results"][i]["id"])
-        poster_path.append(
-            "".join([URL_IMAGE, tmdb_response_json["results"][i]["poster_path"]])
-        )
+        pic = tmdb_response_json["results"][i]["poster_path"]
+        poster_path.append(f"https://image.tmdb.org/t/p/original{pic}")
         title.append(tmdb_response_json["results"][i]["title"])
         vote_average.append(tmdb_response_json["results"][i]["vote_average"])
         release_date.append(tmdb_response_json["results"][i]["release_date"])
-        popularity.append(tmdb_response_json["results"][i]["popularity"])
+        popularity.append(tmdb_response_json["results"][i]["overview"])
     return (id_movie, poster_path, title, vote_average, release_date, popularity)
 
 
