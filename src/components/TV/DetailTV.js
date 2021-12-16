@@ -20,7 +20,7 @@ function DetailTV() {
   const args = JSON.parse(document.getElementById("data").text);
   const toggleLiked = () => {
     if (liked === false) {
-      fetch("/liked", {
+      fetch("/likedTV", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -31,7 +31,7 @@ function DetailTV() {
           title: detailTV[0].name,
           vote_average: detailTV[0].vote_average,
           release_date: detailTV[0].first_air_date,
-          popularity: detailTV[0].popularity
+          popularity: detailTV[0].overview
         })
       });
     } else {

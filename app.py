@@ -103,7 +103,9 @@ class Favorite(db.Model):
     title = db.Column(db.String(1000))
     vote_average = db.Column(db.String(100))
     release_date = db.Column(db.String(100))
-    popularity = db.Column(db.String(100))
+    overview = db.Column(db.String(500))
+    popularity = db.Column(db.String(500))
+    media_type = db.Column(db.String(20))
 
     def __repr__(self):
         return f"<Favorite {self.movie_id}>"
@@ -417,6 +419,37 @@ def get_liked():
             vote_average=vote_average,
             release_date=release_date,
             popularity=popularity,
+            media_type="movie",
+        )
+    )
+    db.session.commit()
+
+    return flask.jsonify({"status": 200, "message": "Successful"})
+
+
+@app.route("/likedTV", methods=["POST"])
+def get_liked_tv():
+    """
+    Handling function when user press like movie.
+    """
+    username = current_user.username
+    movie_id = flask.request.json.get("movie_id")
+    poster_path = flask.request.json.get("poster_path")
+    title = flask.request.json.get("title")
+    vote_average = flask.request.json.get("vote_average")
+    release_date = flask.request.json.get("release_date")
+    popularity = flask.request.json.get("popularity")
+
+    db.session.add(
+        Favorite(
+            username=username,
+            movie_id=movie_id,
+            poster_path=poster_path,
+            title=title,
+            vote_average=vote_average,
+            release_date=release_date,
+            popularity=popularity,
+            media_type="tv",
         )
     )
     db.session.commit()
@@ -550,6 +583,8 @@ def get_all_favorite():
     vote_average = []
     release_date = []
     popularity = []
+    overview = []
+    media_type = []
 
     for item in query_favorite:
         movie_id.append(item.movie_id)
@@ -558,6 +593,8 @@ def get_all_favorite():
         vote_average.append(item.vote_average)
         release_date.append(item.release_date)
         popularity.append(item.popularity)
+        media_type.append(item.media_type)
+        overview.append(item.overview)
 
     all_favorite = [
         {
@@ -567,9 +604,18 @@ def get_all_favorite():
             "vote_average": vote_average,
             "release_date": release_date,
             "popularity": popularity,
+            "media_type": media_type,
+            "overview": overview,
         }
-        for movie_id, poster_path, title, vote_average, release_date, popularity in zip(
-            movie_id, poster_path, title, vote_average, release_date, popularity
+        for movie_id, poster_path, title, vote_average, release_date, popularity, media_type, overview in zip(
+            movie_id,
+            poster_path,
+            title,
+            vote_average,
+            release_date,
+            popularity,
+            media_type,
+            overview,
         )
     ]
     favorite_data = {"favorite": all_favorite}

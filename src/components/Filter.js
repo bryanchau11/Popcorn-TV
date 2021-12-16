@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import Typography from "@mui/material/Typography";
 var axios = require("axios").default;
 function Filter() {
   const [genre, setGenre] = useState("");
@@ -88,11 +89,11 @@ function Filter() {
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
-              style={{ paddingTop: "50px" }}
+              style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
                 <div className="row">
-                  <h1>Filter Movies</h1>
+                  <h1 style={{ color: "white" }}>Filter Movies</h1>
                 </div>
                 <div className="classic">
                   <select onChange={(event) => setGenre(event.target.value)}>
@@ -113,30 +114,49 @@ function Filter() {
                 <div className="row">
                   {filterMovie
                     ? filterMovie.map((item) => (
-                        <div className="card-view">
-                          <div className="card-header">
-                            <Link to={`/detail/${item.id_movie}`}>
-                              <img src={item.poster_path} alt="" />
+                        <div
+                          className="card"
+                          style={{
+                            width: "18rem",
+                            margin: "20px",
+                            padding: "0px",
+                            backgroundColor: "#3F0071",
+                            color: "white"
+                          }}
+                        >
+                          <img
+                            className="card-img-top"
+                            src={item.poster_path}
+                            alt="pic"
+                          />
+                          <div className="card-body">
+                            <h4 className="card-title">{item.title}</h4>
+
+                            <div className="containerCard">
+                              <div className="row">
+                                <div className="col-sm-4 metadata">
+                                  <i
+                                    className="fa fa-star"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <p>{item.vote_average}/10</p>
+                                </div>
+                                <div className="col-sm-8 metadata">
+                                  {item.release_date}
+                                </div>
+                              </div>
+                            </div>
+
+                            <p className="card-text">
+                              {item.popularity.substring(0, 245) + "..."}
+                            </p>
+
+                            <Link
+                              to={`/detail/${item.id_movie}`}
+                              className="trailer-preview"
+                            >
+                              <i className="fa fa-play" aria-hidden="true"></i>
                             </Link>
-                          </div>
-                          <div className="card-movie-content">
-                            <div className="card-movie-content-head">
-                              <h3 className="card-movie-title">{item.title}</h3>
-                              <div className="ratings">
-                                <span>{item.vote_average}</span>
-                                /10
-                              </div>
-                            </div>
-                            <div className="card-movie-info">
-                              <div className="movie-running-time">
-                                <div className="text">Release Date</div>
-                                <span>{item.release_date}</span>
-                              </div>
-                              <div className="movie-running-time">
-                                <div className="text">Popularity</div>
-                                <span>{item.popularity}</span>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       ))
@@ -144,16 +164,21 @@ function Filter() {
                 </div>
               </div>
               <Pagination
+                style={{ color: "white" }}
                 page={page}
-                count={count}
+                count={500}
+                size="large"
+                color="primary"
                 renderItem={(item) => (
                   <PaginationItem
                     component={Link}
+                    style={{ color: "white" }}
                     to={`/filter${item.page === 1 ? "" : `?page=${item.page}`}`}
                     {...item}
                   />
                 )}
               />
+              <Typography style={{ color: "white" }}>Page: {page}</Typography>
             </main>
           </div>
         </div>

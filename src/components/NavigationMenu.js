@@ -22,10 +22,13 @@ function NavigationMenu() {
 
   return (
     <nav
-      className="col-md-2 d-none d-md-block bg-light sidebar"
-      style={{ paddingTop: "50px" }}
+      className="col-md-2 d-none d-md-block sidebar"
+      style={{ paddingTop: "50px", backgroundColor: "black" }}
     >
-      <div className="sidebar-sticky">
+      <div
+        className="sidebar-sticky"
+        style={{ backgroundColor: "black", color: "white" }}
+      >
         <ul className="nav flex-column">
           <li className="nav-item">
             <div className="nav-link" style={{ paddingTop: "50px" }}>
@@ -40,7 +43,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/video.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/video.png"
                 alt=""
               />
               <div>
@@ -51,7 +54,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
+                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/FFFFFF/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
                 alt=""
               />
               <div>
@@ -62,7 +65,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/filter--v1.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/filter--v1.png"
                 alt=""
               />
               <div>
@@ -77,7 +80,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/video.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/video.png"
                 alt=""
               />
               <div>
@@ -88,7 +91,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
+                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/FFFFFF/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
                 alt=""
               />
               <div>
@@ -99,7 +102,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/filter--v1.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/filter--v1.png"
                 alt=""
               />
               <div>
@@ -115,18 +118,20 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/material-outlined/32/000000/like--v1.png"
+                src="https://img.icons8.com/material-outlined/32/FFFFFF/like--v1.png"
                 alt=""
               />
               <div>
-                <Link to="/favorite">Favorite Movies</Link>
+                <Link to="/favorite" style={{ pointerEvents: "none" }}>
+                  Favorite Movies (underdeveloped)
+                </Link>
               </div>
             </div>
           </li>
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/contact-card.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/contact-card.png"
                 alt=""
               />
               <div>
@@ -137,7 +142,7 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/settings.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/settings.png"
                 alt=""
               />
               <div>
@@ -148,18 +153,26 @@ function NavigationMenu() {
           <li className="nav-item">
             <div className="nav-link">
               <img
-                src="https://img.icons8.com/ios/32/000000/logout-rounded--v1.png"
+                src="https://img.icons8.com/ios/32/FFFFFF/logout-rounded--v1.png"
                 alt=""
               />
               {flag ? (
                 <form action="/signout1" method="POST">
-                  <button className="signOut" type="submit">
+                  <button
+                    className="signOut"
+                    type="submit"
+                    style={{ color: "white" }}
+                  >
                     Sign out
                   </button>
                 </form>
               ) : (
                 <form action="/signout" method="POST">
-                  <button className="signOut" type="submit">
+                  <button
+                    className="signOut"
+                    type="submit"
+                    style={{ color: "white" }}
+                  >
                     Log In
                   </button>
                 </form>

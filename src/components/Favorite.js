@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
+import Typography from "@mui/material/Typography";
 
 function Favorite() {
   const [allFavorite, setAllFavorite] = useState([]);
@@ -30,38 +31,63 @@ function Favorite() {
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
-              style={{ paddingTop: "50px" }}
+              style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
                 <div className="row">
-                  <h1>Favorite Movies</h1>
+                  <h1 style={{ color: "white" }}>Favorite Movies</h1>
                 </div>
                 <div className="row">
                   {allFavorite.map((item) => (
-                    <div className="card-view">
-                      <div className="card-header">
-                        <Link to={`/detail/${item.movie_id}`}>
-                          <img src={item.poster_path} alt="" />
-                        </Link>
-                      </div>
-                      <div className="card-movie-content">
-                        <div className="card-movie-content-head">
-                          <h3 className="card-movie-title">{item.title}</h3>
-                          <div className="ratings">
-                            <span>{item.vote_average}</span>
-                            /10
+                    <div
+                      className="card"
+                      style={{
+                        width: "18rem",
+                        margin: "20px",
+                        padding: "0px",
+                        backgroundColor: "#3F0071",
+                        color: "white"
+                      }}
+                    >
+                      <img
+                        className="card-img-top"
+                        src={item.poster_path}
+                        alt="pic"
+                      />
+                      <div className="card-body">
+                        <h4 className="card-title">{item.title} </h4>
+
+                        <div className="containerCard">
+                          <div className="row">
+                            <div className="col-sm-4 metadata">
+                              <i className="fa fa-star" aria-hidden="true"></i>
+                              <p>{item.vote_average}/10</p>
+                            </div>
+                            <div className="col-sm-8 metadata">
+                              {item.release_date}
+                            </div>
                           </div>
                         </div>
-                        <div className="card-movie-info">
-                          <div className="movie-running-time">
-                            <div className="text">Release Date</div>
-                            <span>{item.release_date}</span>
-                          </div>
-                          <div className="movie-running-time">
-                            <div className="text">Popularity</div>
-                            <span>{item.popularity}</span>
-                          </div>
-                        </div>
+
+                        <p className="card-text">
+                          {item.overview.substring(0, 245) + "..."}
+                        </p>
+
+                        {item.media_type == "movie" ? (
+                          <Link
+                            to={`/detail/${item.id_movie}`}
+                            className="trailer-preview"
+                          >
+                            <i className="fa fa-play" aria-hidden="true"></i>
+                          </Link>
+                        ) : (
+                          <Link
+                            to={`/detailTV/${item.id_movie}`}
+                            className="trailer-preview"
+                          >
+                            <i className="fa fa-play" aria-hidden="true"></i>
+                          </Link>
+                        )}
                       </div>
                     </div>
                   ))}

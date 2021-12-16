@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import Typography from "@mui/material/Typography";
 var axios = require("axios").default;
 function TopRated() {
   const args = JSON.parse(document.getElementById("data").text);
@@ -53,39 +54,58 @@ function TopRated() {
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
-              style={{ paddingTop: "50px" }}
+              style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
                 <div className="row">
-                  <h1>Top Rated Movies</h1>
+                  <h1 style={{ color: "white" }}>Top Rated Movies</h1>
                 </div>
                 <div className="row">
                   {movieList
                     ? movieList.map((item) => (
-                        <div className="card-view">
-                          <div className="card-header">
-                            <Link to={`/detail/${item.id_movie}`}>
-                              <img src={item.poster_path} alt="" />
+                        <div
+                          className="card"
+                          style={{
+                            width: "18rem",
+                            margin: "20px",
+                            padding: "0px",
+                            backgroundColor: "#3F0071",
+                            color: "white"
+                          }}
+                        >
+                          <img
+                            className="card-img-top"
+                            src={item.poster_path}
+                            alt="pic"
+                          />
+                          <div className="card-body">
+                            <h4 className="card-title">{item.title}</h4>
+
+                            <div className="containerCard">
+                              <div className="row">
+                                <div className="col-sm-4 metadata">
+                                  <i
+                                    className="fa fa-star"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <p>{item.vote_average}/10</p>
+                                </div>
+                                <div className="col-sm-8 metadata">
+                                  {item.release_date}
+                                </div>
+                              </div>
+                            </div>
+
+                            <p className="card-text">
+                              {item.popularity.substring(0, 245) + "..."}
+                            </p>
+
+                            <Link
+                              to={`/detail/${item.id_movie}`}
+                              className="trailer-preview"
+                            >
+                              <i className="fa fa-play" aria-hidden="true"></i>
                             </Link>
-                          </div>
-                          <div className="card-movie-content">
-                            <div className="card-movie-content-head">
-                              <h3 className="card-movie-title">{item.title}</h3>
-                              <div className="ratings">
-                                <span>{item.vote_average}</span>
-                                /10
-                              </div>
-                            </div>
-                            <div className="card-movie-info">
-                              <div className="movie-running-time">
-                                <div className="text">Release Date</div>
-                                <span>{item.release_date}</span>
-                              </div>
-                              <div className="movie-running-time">
-                                <div className="text">Popularity</div>
-                                <span>{item.popularity}</span>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       ))
@@ -95,9 +115,12 @@ function TopRated() {
               <Pagination
                 page={page}
                 count={count}
+                size="large"
+                color="primary"
                 renderItem={(item) => (
                   <PaginationItem
                     component={Link}
+                    style={{ color: "white" }}
                     to={`/top_rated${
                       item.page === 1 ? "" : `?page=${item.page}`
                     }`}
@@ -105,11 +128,13 @@ function TopRated() {
                   />
                 )}
               />
+              <Typography style={{ color: "white", textAlign: "center" }}>
+                Page: {page}
+              </Typography>
             </main>
           </div>
         </div>
       </div>
-      <div>{page}</div>
     </div>
   );
 }
