@@ -60,7 +60,7 @@ ul {
   list-style-type: none;
 }
 
-h1, h2, h3, h4, h5, p {
+h1, h2, h3, h4, h5 {
   font-weight: 400;
 }
 
@@ -258,4 +258,57 @@ div.scrollmenu a {
   text-align: center;
   padding: 14px;
   text-decoration: none;
+}
+
+/* Movie card*/
+
+.trailer-preview {
+  background-color: #ff3d49;
+  position: absolute;
+  top: 395px;
+  right: 18px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  padding-top: 13px;
+}
+.trailer-preview:hover, .trailer-preview:disabled, .trailer-preview:active, .trailer-preview:focus {
+  background-color: #c41200;
+  color: white;
+}
+.trailer-preview i {
+  margin-left: 5px;
+}
+
+.metadata {
+  background: none;
+  padding: 0;
+  position: relative;
+  border-style: none;
+}
+
+.metadata {
+  font-size: 16px;
+}
+.metadata i, .metadata p {
+  float: left;
+}
+.metadata p {
+  margin-top: 0;
+  margin-left: 10px;
+}
+.metadata i {
+  color: #ff9d00;
+  margin-top: 5px;
+  margin-left: 1px;
+}
+.containerCard {
+  flex-wrap: wrap;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
 }
