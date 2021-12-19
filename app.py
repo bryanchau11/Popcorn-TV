@@ -99,6 +99,11 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
     movie_id = db.Column(db.Integer, nullable=False)
+    poster_path = db.Column(db.String(1000))
+    name = db.Column(db.String(1000))
+    vote_average = db.Column(db.String(100))
+    release_date = db.Column(db.String(100))
+    overview = db.Column(db.String(500))
     media_type = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
@@ -417,12 +422,21 @@ def get_liked_tv():
     Handling function when user press like movie.
     """
     username = current_user.username
-    movie_id = flask.request.json.get("movie_id")
-
+    tv_id = flask.request.json.get("movie_id")
+    poster_path = flask.request.json.get("poster_path")
+    name = flask.request.json.get("name")
+    vote_average = flask.request.json.get("vote_average")
+    release_date = flask.request.json.get("release_date")
+    overview = flask.request.json.get("overview")
     db.session.add(
         Favorite(
             username=username,
-            movie_id=movie_id,
+            movie_id=tv_id,
+            poster_path=poster_path,
+            name=name,
+            vote_average=vote_average,
+            release_date=release_date,
+            overview=overview,
             media_type="tv",
         )
     )

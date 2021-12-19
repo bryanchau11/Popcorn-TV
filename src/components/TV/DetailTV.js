@@ -26,7 +26,12 @@ function DetailTV() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          movie_id: tvID
+          movie_id: tvID,
+          poster_path: detailTV[0].poster_path,
+          name: detailTV[0].name,
+          vote_average: detailTV[0].vote_average,
+          release_date: detailTV[0].first_air_date,
+          overview: detailTV[0].overview
         })
       });
     } else {

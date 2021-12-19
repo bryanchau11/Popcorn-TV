@@ -136,9 +136,7 @@ function NavigationMenu() {
                 alt=""
               />
               <div>
-                <Link to="/favorite" style={{ pointerEvents: "none" }}>
-                  Favorite Movies (underdeveloped)
-                </Link>
+                <Link to="/favorite">Favorite Movies (underdeveloped)</Link>
               </div>
             </div>
           </li>
