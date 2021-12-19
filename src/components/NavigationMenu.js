@@ -113,6 +113,20 @@ function NavigationMenu() {
         </ul>
 
         <hr />
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <div className="nav-link">
+              <img
+                src="https://img.icons8.com/ios/32/FFFFFF/video.png"
+                alt=""
+              />
+              <div>
+                <Link to="/korean">Bryan's KOREAN TV Shows!!</Link>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <hr />
 
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
