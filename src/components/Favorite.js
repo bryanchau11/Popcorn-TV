@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
-import Typography from "@mui/material/Typography";
 
 function Favorite() {
   const [allFavorite, setAllFavorite] = useState([]);

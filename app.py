@@ -552,50 +552,15 @@ def get_all_favorite():
     query_favorite = Favorite.query.filter_by(username=username).all()
 
     movie_id = []
-    poster_path = []
-    title = []
-    vote_average = []
-    release_date = []
-    popularity = []
-    overview = []
-    media_type = []
+    tv_id = []
 
     for item in query_favorite:
-        movie_id.append(item.movie_id)
-        poster_path.append(item.poster_path)
-        title.append(item.title)
-        vote_average.append(item.vote_average)
-        release_date.append(item.release_date)
-        popularity.append(item.popularity)
-        media_type.append(item.media_type)
-        overview.append(item.overview)
+        if item.media_type == "movie":
+            movie_id.append(item.movie_id)
+        else:
+            tv_id.append(item.movie_id)
 
-    all_favorite = [
-        {
-            "movie_id": movie_id,
-            "poster_path": poster_path,
-            "title": title,
-            "vote_average": vote_average,
-            "release_date": release_date,
-            "popularity": popularity,
-            "media_type": media_type,
-            "overview": overview,
-        }
-        for movie_id, poster_path, title, vote_average, release_date, popularity, media_type, overview in zip(
-            movie_id,
-            poster_path,
-            title,
-            vote_average,
-            release_date,
-            popularity,
-            media_type,
-            overview,
-        )
-    ]
-    favorite_data = {"favorite": all_favorite}
-    data = json.dumps(favorite_data)
-
-    return flask.jsonify({"status": 200, "all_favorite": data})
+    return flask.jsonify({"status": 200, "movieList": movie_id, "tvList": tv_id})
 
 
 @app.route("/get_username", methods=["POST"])
