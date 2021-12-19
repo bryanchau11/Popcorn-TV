@@ -14,7 +14,7 @@ function NavigationMenu() {
       .then((response) => response.json())
       .then((data) => {
         setName(data.username);
-        if (data.username == "") {
+        if (data.username === "") {
           setFlag(false);
         }
       });

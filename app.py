@@ -99,7 +99,7 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
     movie_id = db.Column(db.Integer, nullable=False)
-    movie_type = db.Column(db.String(100), nullable=False)
+    media_type = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"<Favorite {self.movie_id}>"
@@ -398,21 +398,11 @@ def get_liked():
     """
     username = current_user.username
     movie_id = flask.request.json.get("movie_id")
-    poster_path = flask.request.json.get("poster_path")
-    title = flask.request.json.get("title")
-    vote_average = flask.request.json.get("vote_average")
-    release_date = flask.request.json.get("release_date")
-    popularity = flask.request.json.get("popularity")
 
     db.session.add(
         Favorite(
             username=username,
             movie_id=movie_id,
-            poster_path=poster_path,
-            title=title,
-            vote_average=vote_average,
-            release_date=release_date,
-            popularity=popularity,
             media_type="movie",
         )
     )
@@ -428,21 +418,11 @@ def get_liked_tv():
     """
     username = current_user.username
     movie_id = flask.request.json.get("movie_id")
-    poster_path = flask.request.json.get("poster_path")
-    title = flask.request.json.get("title")
-    vote_average = flask.request.json.get("vote_average")
-    release_date = flask.request.json.get("release_date")
-    popularity = flask.request.json.get("popularity")
 
     db.session.add(
         Favorite(
             username=username,
             movie_id=movie_id,
-            poster_path=poster_path,
-            title=title,
-            vote_average=vote_average,
-            release_date=release_date,
-            popularity=popularity,
             media_type="tv",
         )
     )
