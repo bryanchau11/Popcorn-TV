@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 function NavigationMenu() {
   const [name, setName] = useState("");
@@ -38,79 +40,90 @@ function NavigationMenu() {
         </ul>
 
         <hr />
-
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/video.png"
-                alt=""
-              />
-              <div>
-                <Link to="/index">Popular Movies</Link>
+        <NavDropdown title="MOVIE">
+          <NavDropdown.Item>
+            <li className="nav-item">
+              <div className="nav-link">
+                <img
+                  src="https://img.icons8.com/ios/32/000000/video.png"
+                  alt=""
+                />
+                <div>
+                  <Link to="/index">Popular Movies</Link>
+                </div>
               </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/FFFFFF/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
-                alt=""
-              />
-              <div>
-                <Link to="/top_rated">Top Rated Movies</Link>
+            </li>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <li className="nav-item">
+              <div className="nav-link">
+                <img
+                  src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
+                  alt=""
+                />
+                <div>
+                  <Link to="/top_rated">Top Rated Movies</Link>
+                </div>
               </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/filter--v1.png"
-                alt=""
-              />
-              <div>
-                <Link to="/filter">Filter Movies</Link>
+            </li>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <li className="nav-item">
+              <div className="nav-link">
+                <img
+                  src="https://img.icons8.com/ios/32/000000/filter--v1.png"
+                  alt=""
+                />
+                <div>
+                  <Link to="/filter">Filter Movies</Link>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </NavDropdown.Item>
+        </NavDropdown>
 
         <hr />
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/video.png"
-                alt=""
-              />
-              <div>
-                <Link to="/popularTV">Popular TV Shows</Link>
+        <NavDropdown title="TV SHOWS">
+          <NavDropdown.Item>
+            <li className="nav-item">
+              <div className="nav-link">
+                <img
+                  src="https://img.icons8.com/ios/32/000000/video.png"
+                  alt=""
+                />
+                <div>
+                  <Link to="/popularTV">Popular TV Shows</Link>
+                </div>
               </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/FFFFFF/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
-                alt=""
-              />
-              <div>
-                <Link to="/top_ratedTV">Top Rated TV Shows</Link>
+            </li>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <li className="nav-item">
+              <div className="nav-link">
+                <img
+                  src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
+                  alt=""
+                />
+                <div>
+                  <Link to="/top_ratedTV">Top Rated TV Shows</Link>
+                </div>
               </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/filter--v1.png"
-                alt=""
-              />
-              <div>
-                <Link to="/filterTV">Filter TV Shows</Link>
+            </li>
+          </NavDropdown.Item>
+          <NavDropdown.Item>
+            <li className="nav-item">
+              <div className="nav-link">
+                <img
+                  src="https://img.icons8.com/ios/32/000000/filter--v1.png"
+                  alt=""
+                />
+                <div>
+                  <Link to="/filterTV">Filter TV Shows</Link>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </NavDropdown.Item>
+        </NavDropdown>
 
         <hr />
         <ul className="nav flex-column">
