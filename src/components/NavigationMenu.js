@@ -14,7 +14,7 @@ function NavigationMenu() {
       .then((response) => response.json())
       .then((data) => {
         setName(data.username);
-        if (data.username == "") {
+        if (data.username === "") {
           setFlag(false);
         }
       });
@@ -136,9 +136,7 @@ function NavigationMenu() {
                 alt=""
               />
               <div>
-                <Link to="/favorite" style={{ pointerEvents: "none" }}>
-                  Favorite Movies (underdeveloped)
-                </Link>
+                <Link to="/favorite">Favorite Movies</Link>
               </div>
             </div>
           </li>

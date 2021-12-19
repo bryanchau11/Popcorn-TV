@@ -97,15 +97,14 @@ class Favorite(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
     movie_id = db.Column(db.Integer, nullable=False)
     poster_path = db.Column(db.String(1000))
-    title = db.Column(db.String(1000))
+    name = db.Column(db.String(1000))
     vote_average = db.Column(db.String(100))
     release_date = db.Column(db.String(100))
     overview = db.Column(db.String(500))
-    popularity = db.Column(db.String(500))
-    media_type = db.Column(db.String(20))
+    media_type = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"<Favorite {self.movie_id}>"
@@ -383,10 +382,10 @@ def check_liked():
     """
     Check if the user has liked the movie.
     """
-    username = current_user.username
+    email = current_user.email
     movie_id = flask.request.json.get("movie_id")
 
-    query_favorite = Favorite.query.filter_by(username=username).all()
+    query_favorite = Favorite.query.filter_by(email=email).all()
 
     movie_ids = []
     for item in query_favorite:
@@ -402,23 +401,22 @@ def get_liked():
     """
     Handling function when user press like movie.
     """
-    username = current_user.username
+    email = current_user.email
     movie_id = flask.request.json.get("movie_id")
     poster_path = flask.request.json.get("poster_path")
-    title = flask.request.json.get("title")
+    name = flask.request.json.get("title")
     vote_average = flask.request.json.get("vote_average")
     release_date = flask.request.json.get("release_date")
-    popularity = flask.request.json.get("popularity")
-
+    overview = flask.request.json.get("overview")
     db.session.add(
         Favorite(
-            username=username,
+            email=email,
             movie_id=movie_id,
+            name=name,
             poster_path=poster_path,
-            title=title,
             vote_average=vote_average,
             release_date=release_date,
-            popularity=popularity,
+            overview=overview,
             media_type="movie",
         )
     )
@@ -432,23 +430,22 @@ def get_liked_tv():
     """
     Handling function when user press like movie.
     """
-    username = current_user.username
-    movie_id = flask.request.json.get("movie_id")
+    email = current_user.email
+    tv_id = flask.request.json.get("movie_id")
     poster_path = flask.request.json.get("poster_path")
-    title = flask.request.json.get("title")
+    name = flask.request.json.get("name")
     vote_average = flask.request.json.get("vote_average")
     release_date = flask.request.json.get("release_date")
-    popularity = flask.request.json.get("popularity")
-
+    overview = flask.request.json.get("overview")
     db.session.add(
         Favorite(
-            username=username,
-            movie_id=movie_id,
+            email=email,
+            movie_id=tv_id,
             poster_path=poster_path,
-            title=title,
+            name=name,
             vote_average=vote_average,
             release_date=release_date,
-            popularity=popularity,
+            overview=overview,
             media_type="tv",
         )
     )
@@ -462,10 +459,10 @@ def get_unliked():
     """
     Handling function when user press unlike movie.
     """
-    username = current_user.username
+    email = current_user.email
     movie_id = flask.request.json.get("movie_id")
 
-    Favorite.query.filter_by(username=username, movie_id=movie_id).delete()
+    Favorite.query.filter_by(email=email, movie_id=movie_id).delete()
     db.session.commit()
 
     return flask.jsonify({"status": 200, "message": "Successful"})
@@ -568,60 +565,92 @@ def filter_movie():
     return flask.jsonify({"status": 200, "filter": data})
 
 
+## TEST DB
+
+
+query_favorite = Favorite.query.filter_by(email="bryan@gmail.com").all()
+for item in query_favorite:
+    print(item.media_type)
+##
+
+
 @app.route("/all_favorite", methods=["POST"])
 def get_all_favorite():
     """
     Load all the movies that the user has liked.
     """
-    username = current_user.username
+    email = current_user.email
 
-    query_favorite = Favorite.query.filter_by(username=username).all()
-
+    query_favorite = Favorite.query.filter_by(email=email).all()
+    # Movie
     movie_id = []
-    poster_path = []
-    title = []
-    vote_average = []
-    release_date = []
-    popularity = []
-    overview = []
-    media_type = []
+    poster_path_movie = []
+    name_movie = []
+    vote_average_movie = []
+    release_date_movie = []
+    overview_movie = []
+    # TV
+    tv_id = []
+    poster_path_tv = []
+    name_tv = []
+    vote_average_tv = []
+    release_date_tv = []
+    overview_tv = []
 
     for item in query_favorite:
-        movie_id.append(item.movie_id)
-        poster_path.append(item.poster_path)
-        title.append(item.title)
-        vote_average.append(item.vote_average)
-        release_date.append(item.release_date)
-        popularity.append(item.popularity)
-        media_type.append(item.media_type)
-        overview.append(item.overview)
+        if item.media_type == "tv":
+            tv_id.append(item.movie_id)
+            poster_path_tv.append(item.poster_path)
+            name_tv.append(item.name)
+            vote_average_tv.append(item.vote_average)
+            release_date_tv.append(item.release_date)
+            overview_tv.append(item.overview)
 
-    all_favorite = [
+        else:
+            movie_id.append(item.movie_id)
+            poster_path_movie.append(item.poster_path)
+            name_movie.append(item.name)
+            vote_average_movie.append(item.vote_average)
+            release_date_movie.append(item.release_date)
+            overview_movie.append(item.overview)
+    all_favorite_movie = [
         {
             "movie_id": movie_id,
             "poster_path": poster_path,
-            "title": title,
+            "name": name,
             "vote_average": vote_average,
-            "release_date": release_date,
-            "popularity": popularity,
-            "media_type": media_type,
+            "first_air_date": release_date,
             "overview": overview,
         }
-        for movie_id, poster_path, title, vote_average, release_date, popularity, media_type, overview in zip(
+        for movie_id, poster_path, name, vote_average, release_date, overview in zip(
             movie_id,
-            poster_path,
-            title,
-            vote_average,
-            release_date,
-            popularity,
-            media_type,
-            overview,
+            poster_path_movie,
+            name_movie,
+            vote_average_movie,
+            release_date_movie,
+            overview_movie,
         )
     ]
-    favorite_data = {"favorite": all_favorite}
-    data = json.dumps(favorite_data)
+    all_favorite_tv = [
+        {
+            "tv_id": tv_id,
+            "poster_path": poster_path,
+            "name": name,
+            "vote_average": vote_average,
+            "first_air_date": release_date,
+            "overview": overview,
+        }
+        for tv_id, poster_path, name, vote_average, release_date, overview in zip(
+            tv_id,
+            poster_path_tv,
+            name_tv,
+            vote_average_tv,
+            release_date_tv,
+            overview_tv,
+        )
+    ]
 
-    return flask.jsonify({"status": 200, "all_favorite": data})
+    return flask.jsonify({"tvList": all_favorite_tv, "movieList": all_favorite_movie})
 
 
 @app.route("/get_username", methods=["POST"])
