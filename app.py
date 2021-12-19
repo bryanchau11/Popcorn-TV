@@ -99,13 +99,7 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)
     movie_id = db.Column(db.Integer, nullable=False)
-    poster_path = db.Column(db.String(1000))
-    title = db.Column(db.String(1000))
-    vote_average = db.Column(db.String(100))
-    release_date = db.Column(db.String(100))
-    overview = db.Column(db.String(500))
-    popularity = db.Column(db.String(500))
-    media_type = db.Column(db.String(20))
+    movie_type = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"<Favorite {self.movie_id}>"
