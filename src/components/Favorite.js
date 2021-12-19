@@ -5,7 +5,7 @@ import NavigationMenu from "./NavigationMenu";
 import axios from "axios";
 function Favorite() {
   const [allFavorite, setAllFavorite] = useState([]);
-  const [detailTV, setDetailTV] = useState([]);
+  const [detailTV, setDetailTV] = useState(null);
   const [movie, setMovie] = useState([]);
   const [tv, setTV] = useState([]);
   useEffect(() => {
@@ -17,46 +17,12 @@ function Favorite() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setMovie(data.movieList);
-        setTV(data.tvList);
+        //setMovie(data.movieList);
+
+        setDetailTV(data.tvList);
+        console.log(data.tvList);
       });
   }, []);
-  console.log(tv);
-  // Get TV list
-  useEffect(() => {
-    const lst = [];
-
-    for (var i = 0; i < tv.length; i++) {
-      const options = {
-        method: "GET",
-        url: `https://api.themoviedb.org/3/tv/${tv[i]}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-      };
-
-      axios
-        .request(options)
-        .then(function (response) {
-          const genreList = [];
-          const result = response.data;
-          for (var i = 0; i < result["genres"].length; i++) {
-            genreList.push(result["genres"][i]["name"]);
-          }
-
-          lst.push({
-            first_air_date: result["first_air_date"],
-            id_tv: result["id"],
-            name: result["name"],
-            vote_average: result["vote_average"],
-            overview: result["overview"],
-            poster_path:
-              "https://image.tmdb.org/t/p/original" + result["poster_path"]
-          });
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    }
-    setDetailTV(lst);
-  }, [tv]);
   console.log(detailTV);
   return (
     <div className="Favorite">
@@ -71,7 +37,7 @@ function Favorite() {
               style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
-                <div className="row">
+                {/* <div className="row">
                   <h1 style={{ color: "white" }}>Favorite Movies</h1>
                 </div>
                 <div className="row">
@@ -129,6 +95,7 @@ function Favorite() {
                     </div>
                   ))}
                 </div>
+                * */}
                 <div className="row">
                   <h1 style={{ color: "white" }}>Favorite TV</h1>
                 </div>
@@ -173,7 +140,7 @@ function Favorite() {
                             </p>
 
                             <Link
-                              to={`/detailTV/${item.id_tv}`}
+                              to={`/detailTV/${item.tv_id}`}
                               className="trailer-preview"
                             >
                               <i className="fa fa-play" aria-hidden="true"></i>
