@@ -136,7 +136,7 @@ function NavigationMenu() {
                 alt=""
               />
               <div>
-                <Link to="/favorite">Favorite Movies (underdeveloped)</Link>
+                <Link to="/favorite">Favorite Movies</Link>
               </div>
             </div>
           </li>

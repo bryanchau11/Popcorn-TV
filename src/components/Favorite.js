@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import NavigationMenu from "./NavigationMenu";
-import axios from "axios";
+
 function Favorite() {
-  const [allFavorite, setAllFavorite] = useState([]);
   const [detailTV, setDetailTV] = useState(null);
-  const [movie, setMovie] = useState([]);
-  const [tv, setTV] = useState([]);
+  const [detailMovie, setDetailMovie] = useState(null);
+
   useEffect(() => {
     fetch("/all_favorite", {
       method: "POST",
@@ -17,10 +16,8 @@ function Favorite() {
     })
       .then((response) => response.json())
       .then((data) => {
-        //setMovie(data.movieList);
-
+        setDetailMovie(data.movieList);
         setDetailTV(data.tvList);
-        console.log(data.tvList);
       });
   }, []);
   console.log(detailTV);
@@ -37,65 +34,60 @@ function Favorite() {
               style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
-                {/* <div className="row">
+                <div className="row">
                   <h1 style={{ color: "white" }}>Favorite Movies</h1>
                 </div>
                 <div className="row">
-                  {allFavorite.map((item) => (
-                    <div
-                      className="card"
-                      style={{
-                        width: "18rem",
-                        margin: "20px",
-                        padding: "0px",
-                        backgroundColor: "#3F0071",
-                        color: "white"
-                      }}
-                    >
-                      <img
-                        className="card-img-top"
-                        src={item.poster_path}
-                        alt="pic"
-                      />
-                      <div className="card-body">
-                        <h4 className="card-title">{item.title} </h4>
+                  {detailMovie
+                    ? detailMovie.map((item) => (
+                        <div
+                          className="card"
+                          style={{
+                            width: "18rem",
+                            margin: "20px",
+                            padding: "0px",
+                            backgroundColor: "#3F0071",
+                            color: "white"
+                          }}
+                        >
+                          <img
+                            className="card-img-top"
+                            src={item.poster_path}
+                            alt="pic"
+                          />
+                          <div className="card-body">
+                            <h4 className="card-title">{item.name} </h4>
 
-                        <div className="containerCard">
-                          <div className="row">
-                            <div className="col-sm-4 metadata">
-                              <i className="fa fa-star" aria-hidden="true"></i>
-                              <p>{item.vote_average}/10</p>
+                            <div className="containerCard">
+                              <div className="row">
+                                <div className="col-sm-4 metadata">
+                                  <i
+                                    className="fa fa-star"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <p>{item.vote_average}/10</p>
+                                </div>
+                                <div className="col-sm-8 metadata">
+                                  {item.release_date}
+                                </div>
+                              </div>
                             </div>
-                            <div className="col-sm-8 metadata">
-                              {item.release_date}
-                            </div>
+
+                            <p className="card-text">
+                              {item.overview.substring(0, 245) + "..."}
+                            </p>
+                            <Link
+                              to={`/detail/${item.movie_id}`}
+                              className="trailer-preview"
+                            >
+                              <i className="fa fa-play" aria-hidden="true"></i>
+                            </Link>
                           </div>
                         </div>
-
-                        <p className="card-text">
-                          {item.overview.substring(0, 245) + "..."}
-                        </p>
-
-                        {item.media_type == "movie" ? (
-                          <Link
-                            to={`/detail/${item.id_movie}`}
-                            className="trailer-preview"
-                          >
-                            <i className="fa fa-play" aria-hidden="true"></i>
-                          </Link>
-                        ) : (
-                          <Link
-                            to={`/detailTV/${item.id_movie}`}
-                            className="trailer-preview"
-                          >
-                            <i className="fa fa-play" aria-hidden="true"></i>
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                      ))
+                    : ""}
                 </div>
-                * */}
+
                 <div className="row">
                   <h1 style={{ color: "white" }}>Favorite TV</h1>
                 </div>

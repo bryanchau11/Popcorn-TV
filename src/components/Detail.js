@@ -23,7 +23,13 @@ function Detail() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          movie_id: movieID
+          movie_id: movieID,
+          poster_path: detailMovie.poster_path,
+          title: detailMovie.title,
+          vote_average: detailMovie.vote_average,
+          release_date: detailMovie.release_date,
+          popularity: detailMovie.popularity,
+          overview: detailMovie.overview
         })
       });
     } else {

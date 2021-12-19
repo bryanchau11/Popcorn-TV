@@ -403,11 +403,20 @@ def get_liked():
     """
     email = current_user.email
     movie_id = flask.request.json.get("movie_id")
-
+    poster_path = flask.request.json.get("poster_path")
+    name = flask.request.json.get("title")
+    vote_average = flask.request.json.get("vote_average")
+    release_date = flask.request.json.get("release_date")
+    overview = flask.request.json.get("overview")
     db.session.add(
         Favorite(
             email=email,
             movie_id=movie_id,
+            name=name,
+            poster_path=poster_path,
+            vote_average=vote_average,
+            release_date=release_date,
+            overview=overview,
             media_type="movie",
         )
     )
@@ -596,15 +605,32 @@ def get_all_favorite():
             vote_average_tv.append(item.vote_average)
             release_date_tv.append(item.release_date)
             overview_tv.append(item.overview)
-        """ 
+
         else:
-            tv_id.append(item.movie_id)
+            movie_id.append(item.movie_id)
             poster_path_movie.append(item.poster_path)
             name_movie.append(item.name)
             vote_average_movie.append(item.vote_average)
             release_date_movie.append(item.release_date)
             overview_movie.append(item.overview)
-        """
+    all_favorite_movie = [
+        {
+            "movie_id": movie_id,
+            "poster_path": poster_path,
+            "name": name,
+            "vote_average": vote_average,
+            "first_air_date": release_date,
+            "overview": overview,
+        }
+        for movie_id, poster_path, name, vote_average, release_date, overview in zip(
+            movie_id,
+            poster_path_movie,
+            name_movie,
+            vote_average_movie,
+            release_date_movie,
+            overview_movie,
+        )
+    ]
     all_favorite_tv = [
         {
             "tv_id": tv_id,
@@ -624,7 +650,7 @@ def get_all_favorite():
         )
     ]
 
-    return flask.jsonify({"tvList": all_favorite_tv})
+    return flask.jsonify({"tvList": all_favorite_tv, "movieList": all_favorite_movie})
 
 
 @app.route("/get_username", methods=["POST"])
