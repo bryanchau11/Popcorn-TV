@@ -620,6 +620,52 @@ function DetailTV() {
               />
             </div>
           </div>
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>COMMENT</h3>
+              <div classNameName="textarea">
+                <textarea
+                  cols="110"
+                  rows="5"
+                  ref={textInput}
+                  placeholder="Add comment..."
+                />
+              </div>
+              <div classNameName="btn">
+                <button
+                  classNameName="btn btn-primary"
+                  onClick={addComment}
+                  type="submit"
+                >
+                  Post
+                </button>
+              </div>
+              <div className="wrapper">
+                {newComment.map((item) => (
+                  <div classNameName="row">
+                    <div classNameName="col-sm-12">
+                      <hr />
+                      <div classNameName="row">
+                        <span className="tagline">
+                          <h2>{item.name}</h2>
+                          {item.date} at {item.hour}
+                        </span>
+                        <p
+                          style={{
+                            marginTop: "3.5vh",
+                            color: "white",
+                            fontSize: "25px"
+                          }}
+                        >
+                          {item.comment}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}{" "}
+              </div>
+            </div>
+          </div>
         </>
       )}
     </>
