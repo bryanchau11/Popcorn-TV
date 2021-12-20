@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import EmblaCarousel from "embla-carousel-react";
 import { Modal, Button } from "react-bootstrap";
+import { HashLink } from "react-router-hash-link";
 //import ReactStars from "react-rating-stars-component";
 import "../../style/Detail.css";
 import "../../style/bootstrap.min.css";
@@ -466,7 +466,7 @@ function DetailTV() {
               </select>
               {episodeList.length !== 0
                 ? episodeList.map((item) => (
-                    <a href="#tvShow" style={{ textDecoration: "none" }}>
+                    <HashLink to="#tvShow" style={{ textDecoration: "none" }}>
                       <div
                         className="movie_card"
                         id="bright"
@@ -498,7 +498,7 @@ function DetailTV() {
                           }}
                         ></div>
                       </div>
-                    </a>
+                    </HashLink>
                   ))
                 : ""}
             </div>

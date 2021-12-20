@@ -23,7 +23,7 @@ ReactDOM.render(
   <HashRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/index" element={<App />} />
+
       <Route path="/top_rated" element={<TopRated />} />
       <Route path="/search/:movieName" element={<Search />} />
       <Route path="/detail/:movieID" element={<Detail />} />
