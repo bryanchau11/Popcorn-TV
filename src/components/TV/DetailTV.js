@@ -48,6 +48,8 @@ function DetailTV() {
   const [season, setSeason] = useState(1);
   const [episode, setEpisode] = useState(1);
   const [tvList, setTVList] = useState(null);
+  const [seasonList, setSeasonList] = useState([]);
+  const [episodeList, setEpisodeList] = useState([]);
   useEffect(() => {
     // Get TV detail
     const options = {
@@ -90,6 +92,7 @@ function DetailTV() {
         });
         setDetailTV(lst);
         const seasonAndEpisode = [];
+        const seasonTemp = [];
         var str = "";
         for (i = 0; i < result["seasons"].length; i++) {
           if (
@@ -102,6 +105,7 @@ function DetailTV() {
                 result["seasons"][i]["season_number"] +
                 ", Episode: " +
                 (j + 1).toString();
+
               seasonAndEpisode.push({
                 label: str,
                 season: i + 1,
@@ -110,6 +114,10 @@ function DetailTV() {
             }
           }
         }
+        for (i = 0; i < result["number_of_seasons"]; i++) {
+          seasonTemp.push({ label: "Season: " + (i + 1), value: i + 1 });
+        }
+        setSeasonList(seasonTemp);
         setTVList(seasonAndEpisode);
       })
       .catch(function (error) {
@@ -383,10 +391,17 @@ function DetailTV() {
                 <span style={{ color: "#00fc87" }}> {episode} </span>
               </h3>
               <h3>
-                <select onChange={handleChange}>
+                {/* <select onChange={handleChange}>
                   {tvList
                     ? tvList.map((item) => (
                         <option value={item.label}>{item.label}</option>
+                      ))
+                    : ""}
+                </select>* */}
+                <select onChange={handleChange}>
+                  {seasonList
+                    ? seasonList.map((item) => (
+                        <option value={item.value}>{item.label}</option>
                       ))
                     : ""}
                 </select>
