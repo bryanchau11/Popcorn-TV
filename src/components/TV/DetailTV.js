@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import "../../style/Detail.css";
 import "../../style/bootstrap.min.css";
-import "../../App.css";
+//import "../../App.css";
 import SearchBar from "../SearchBar";
 
 import NavigationMenu from "../NavigationMenu";
@@ -63,15 +63,27 @@ function DetailTV() {
         for (var i = 0; i < result["genres"].length; i++) {
           genreList.push(result["genres"][i]["name"]);
         }
-
+        let director = "";
+        if (result["created_by"].length === 0) {
+          director = "N/A";
+        } else {
+          director = result["created_by"][0]["name"];
+        }
         lst.push({
           first_air_date: result["first_air_date"],
+          director: director,
+          vote_count: result["vote_count"],
+          vote_average: result["vote_average"],
+          status: result["status"],
+          tagline: result["tagline"],
           id: result["id"],
           name: result["name"],
           overview: result["overview"],
           runtime: result["episode_run_time"][0],
           poster_path:
-            "https://image.tmdb.org/t/p/w200" + result["poster_path"],
+            "https://image.tmdb.org/t/p/original" + result["poster_path"],
+          backdrop_path:
+            "https://image.tmdb.org/t/p/original" + result["backdrop_path"],
           number_of_episodes: result["number_of_episodes"],
           number_of_seasons: result["number_of_seasons"],
           genres: genreList.join(", ")
@@ -206,13 +218,16 @@ function DetailTV() {
       .then(function (response) {
         const result = response.data.cast;
         let pic = null;
+
         for (var i = 0; i < result.length; i++) {
           if (result[i]["profile_path"] == null) {
             pic =
               "https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png";
           } else {
-            pic = "https://image.tmdb.org/t/p/w200" + result[i]["profile_path"];
+            pic =
+              "https://image.tmdb.org/t/p/original" + result[i]["profile_path"];
           }
+
           lst.push({
             id_cast: result[i]["id"],
             profile_path: pic,
@@ -234,26 +249,26 @@ function DetailTV() {
 
     setEpisode(parseInt(numStr.substring(1)));
   }
-  return (
-    <div className="Detail">
-      <div className="container p-0">
+  /*
+    <div classNameName="Detail">
+      <div classNameName="container p-0">
         <SearchBar />
-        <div className="container-fluid">
-          <div className="row">
+        <div classNameName="container-fluid">
+          <div classNameName="row">
             <NavigationMenu />
             <main
               role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              classNameName="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
               style={{ paddingTop: "50px" }}
             >
               {detailTV.length == 0 ? (
                 ""
               ) : (
-                <div className="movie_card" id="bright">
-                  <div className="info_section">
-                    <div className="movie_header">
+                <div classNameName="movie_card" id="bright">
+                  <div classNameName="info_section">
+                    <div classNameName="movie_header">
                       <img
-                        className="locandina"
+                        classNameName="locandina"
                         src={detailTV[0].poster_path}
                         alt=""
                       />
@@ -262,17 +277,17 @@ function DetailTV() {
                       <h6>
                         Number of seasons: {detailTV[0].number_of_seasons}
                       </h6>
-                      <span className="minutes">{detailTV[0].runtime} min</span>
-                      <p className="type">{detailTV[0].genres}</p>
+                      <span classNameName="minutes">{detailTV[0].runtime} min</span>
+                      <p classNameName="type">{detailTV[0].genres}</p>
                     </div>
                     <br />
-                    <div className="movie_desc">
-                      <p className="text">{detailTV[0].overview}</p>
+                    <div classNameName="movie_desc">
+                      <p classNameName="text">{detailTV[0].overview}</p>
                     </div>
                   </div>
                   <div>
                     <img
-                      className="blur_back bright_back"
+                      classNameName="blur_back bright_back"
                       src={detailTV[0].poster_path}
                       alt=""
                     />
@@ -281,7 +296,7 @@ function DetailTV() {
               )}
 
               <div
-                className="movie_card"
+                classNameName="movie_card"
                 id="bright"
                 style={{ width: "1000px", height: "700px" }}
               >
@@ -302,15 +317,15 @@ function DetailTV() {
               </select>
               <hr />
 
-              <div className="pt-8 pb-2 mb-3 border-bottom">
-                <div className="row">
+              <div classNameName="pt-8 pb-2 mb-3 border-bottom">
+                <div classNameName="row">
                   <h1>Cast</h1>
                 </div>
-                <div className="scrollmenu">
+                <div classNameName="scrollmenu">
                   {cast
                     ? cast.map((item) => (
-                        <div className="card-view">
-                          <div className="card-header">
+                        <div classNameName="card-view">
+                          <div classNameName="card-header">
                             <Link to={`/detail/${item.id_cast}`}>
                               <img
                                 src={item.profile_path}
@@ -319,13 +334,13 @@ function DetailTV() {
                               />
                             </Link>
                           </div>
-                          <div className="card-movie-content">
-                            <div className="card-movie-content-head">
-                              <h2 className="card-movie-title">{item.name}</h2>
+                          <div classNameName="card-movie-content">
+                            <div classNameName="card-movie-content-head">
+                              <h2 classNameName="card-movie-title">{item.name}</h2>
                             </div>
-                            <div className="card-movie-info">
-                              <div className="movie-running-time">
-                                <div className="text">Character</div>
+                            <div classNameName="card-movie-info">
+                              <div classNameName="movie-running-time">
+                                <div classNameName="text">Character</div>
                                 <span>{item.character}</span>
                               </div>
                             </div>
@@ -340,7 +355,7 @@ function DetailTV() {
               <div>
                 <div>Favorite:</div>
                 <button
-                  className="likedMovie"
+                  classNameName="likedMovie"
                   onClick={toggleLiked}
                   type="button"
                 >
@@ -364,7 +379,7 @@ function DetailTV() {
                   activeColor="#ffd700"
                 />
                 <div>Comment:</div>
-                <div className="textarea">
+                <div classNameName="textarea">
                   <textarea
                     cols="110"
                     rows="5"
@@ -372,9 +387,9 @@ function DetailTV() {
                     placeholder="Add comment..."
                   />
                 </div>
-                <div className="btn">
+                <div classNameName="btn">
                   <button
-                    className="btn btn-primary"
+                    classNameName="btn btn-primary"
                     onClick={addComment}
                     type="submit"
                   >
@@ -384,24 +399,24 @@ function DetailTV() {
               </div>
 
               {newComment.map((item) => (
-                <div className="row">
-                  <div className="col-sm-12">
+                <div classNameName="row">
+                  <div classNameName="col-sm-12">
                     <hr />
-                    <div className="row">
-                      <div className="col-sm-3">
+                    <div classNameName="row">
+                      <div classNameName="col-sm-3">
                         <img
                           src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/60/000000/external-user-interface-kiranshastry-solid-kiranshastry.png"
                           alt=""
                         />
-                        <div className="review-block-name">{item.name}</div>
-                        <div className="review-block-date">
+                        <div classNameName="review-block-name">{item.name}</div>
+                        <div classNameName="review-block-date">
                           {item.date}
                           <br />
                           {item.hour}
                         </div>
                       </div>
-                      <div className="col-sm-9">
-                        <div className="review-block-rate">
+                      <div classNameName="col-sm-9">
+                        <div classNameName="review-block-rate">
                           {[...Array(item.rating)].map(() => (
                             <img
                               src="https://img.icons8.com/fluency/24/000000/star.png"
@@ -409,7 +424,7 @@ function DetailTV() {
                             />
                           ))}
                         </div>
-                        <div className="review-block-description">
+                        <div classNameName="review-block-description">
                           {item.comment}
                         </div>
                       </div>
@@ -421,7 +436,193 @@ function DetailTV() {
           </div>
         </div>
       </div>
-    </div>
+    </div> */
+  return (
+    <>
+      {detailTV.length === 0 ? (
+        ""
+      ) : (
+        <>
+          <div>
+            <img
+              alt=""
+              id="postertest"
+              className="poster"
+              src={detailTV[0].backdrop_path}
+            />
+          </div>
+
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="meta-data-container col-xs-12 col-md-8 push-md-4 col-lg-7 push-lg-5">
+              <h1>
+                {detailTV[0].name}{" "}
+                <button
+                  classNameName="likedMovie"
+                  onClick={toggleLiked}
+                  type="button"
+                >
+                  {liked ? (
+                    <img
+                      src="https://img.icons8.com/color/24/000000/filled-like.png"
+                      alt=""
+                    />
+                  ) : (
+                    <img
+                      src="https://img.icons8.com/material-outlined/24/000000/like--v1.png"
+                      alt=""
+                    />
+                  )}
+                </button>
+              </h1>
+              <span className="tagline">
+                <h2>{detailTV[0].tagline}</h2>
+                {detailTV[0].genres} | {detailTV[0].runtime} mins|{" "}
+                {detailTV[0].number_of_seasons} seasons |{" "}
+                {detailTV[0].first_air_date}
+              </span>
+              <p style={{ marginTop: "6.5vh" }}>
+                <h4>SYNOPSIS</h4>
+                {detailTV[0].overview}
+              </p>
+
+              <div className="additional-details">
+                <span className="genre-list"></span>
+                <span className="production-list"></span>
+                <div className="nopadding release-details">
+                  <div className="col-xs-6">
+                    Directed by:
+                    <span className="meta-data">{detailTV[0].director}</span>
+                  </div>
+                  <div className="col-xs-6">
+                    Status:
+                    <span className="meta-data">{detailTV[0].status}</span>
+                  </div>
+                  <div className="col-xs-6">
+                    Vote Count:
+                    <span className="meta-data">{detailTV[0].vote_count}</span>
+                  </div>
+                  <div className="col-xs-6">
+                    Vote Average:
+                    <span className="meta-data">
+                      {detailTV[0].vote_average} / 10
+                    </span>
+                  </div>
+                  <div className="col-xs-6">
+                    <button
+                      type="button"
+                      className="btn btn-red btn-lg"
+                      data-toggle="modal"
+                      data-target="#myModal"
+                    >
+                      Watch Trailer
+                    </button>
+                    <div id="myModal" className="modal fade" role="dialog">
+                      <div className="modal-dialog">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="modal"
+                            >
+                              &times;
+                            </button>
+                            <h4 className="modal-title">Modal Header</h4>
+                          </div>
+                          <div className="modal-body">
+                            <div className="video-container">
+                              <div>
+                                <iframe
+                                  title="x"
+                                  width="640"
+                                  height="360"
+                                  className="youtube"
+                                  src="https://www.youtube.com/"
+                                  allowfullscreen=""
+                                ></iframe>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="modal-footer">
+                            <button
+                              type="button"
+                              className="btn btn-default"
+                              data-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xs-6">
+                    <a href="/nowplaying" className="btn-lg btn-green">
+                      View More
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="poster-container nopadding col-xs-12 col-md-4 pull-md-8 col-lg-5 pull-lg-7 ">
+              <img className="poster" src={detailTV[0].poster_path} alt="" />
+            </div>
+          </div>
+          {/** CAST DETAILS */}
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>STARRING</h3>
+              <div style={{ marginTop: "50px" }} className="row row-flex">
+                {cast
+                  ? cast.map((item) => (
+                      <div className="col-md-3">
+                        <div className="responsive-circle">
+                          <div>
+                            <img
+                              src={item.profile_path}
+                              className="image--cover"
+                              alt=""
+                            />
+                            <figcaption>{item.name}</figcaption>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  : ""}
+              </div>
+            </div>
+          </div>
+
+          {/** MOVIE PARTs */}
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>
+                WATCH NOW | SEASON:{" "}
+                <span style={{ color: "#00fc87" }}> {season} </span> | EPISODE:{" "}
+                <span style={{ color: "#00fc87" }}> {episode} </span>
+              </h3>
+              <h3>
+                <select onChange={handleChange}>
+                  {tvList
+                    ? tvList.map((item) => (
+                        <option value={item.label}>{item.label}</option>
+                      ))
+                    : ""}
+                </select>
+              </h3>
+              <iframe
+                title="movie"
+                src={`https://www.2embed.ru/embed/tmdb/tv?id=${tvID}&s=${season}&e=${episode}`}
+                width="1000"
+                height="700"
+                allow="fullscreen"
+              />
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 }
 
