@@ -102,6 +102,13 @@ def get_detail_movie(movie_id):
     genres = ", ".join(genres_temp)
     overview = tmdb_response_json["overview"]
 
+    pic2 = tmdb_response_json["backdrop_path"]
+    backdrop_path = f"https://image.tmdb.org/t/p/original{pic2}"
+
+    tagline = tmdb_response_json["tagline"]
+    vote_count = tmdb_response_json["vote_count"]
+    status = tmdb_response_json["status"]
+
     return (
         poster_path,
         title,
@@ -111,6 +118,10 @@ def get_detail_movie(movie_id):
         runtime,
         genres,
         overview,
+        backdrop_path,
+        tagline,
+        vote_count,
+        status,
     )
 
 

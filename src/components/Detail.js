@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
+//import ReactStars from "react-rating-stars-component";
 import "../style/Detail.css";
-import SearchBar from "./SearchBar";
-import NavigationMenu from "./NavigationMenu";
+import "../style/bootstrap.min.css";
+import { Modal, Button } from "react-bootstrap";
+//import SearchBar from "./SearchBar";
+//import NavigationMenu from "./NavigationMenu";
 import axios from "axios";
 
 function Detail() {
@@ -11,6 +13,8 @@ function Detail() {
   const [detailMovie, setDetailMovie] = useState([]);
   const textInput = useRef(null);
   const [ratingMovie, setRatingMovie] = useState(0);
+  const args = JSON.parse(document.getElementById("data").text);
+
   const [avgRating, setAvgRating] = useState(0);
   const [newComment, setNewComment] = useState([]);
   const [liked, setLiked] = useState(false);
@@ -110,7 +114,7 @@ function Detail() {
     const hourComment = currentdate.toLocaleTimeString();
 
     newListComment.push({
-      name: detailMovie.username,
+      name: args.username,
       date: dateComment,
       hour: hourComment,
       comment: newItem,
@@ -181,97 +185,31 @@ function Detail() {
         console.error(error);
       });
   }, [movieID]);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
-    <div className="Detail">
-      <div className="container p-0">
-        <SearchBar />
-        <div className="container-fluid">
-          <div className="row">
-            <NavigationMenu />
-            <main
-              role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
-              style={{ paddingTop: "50px" }}
-            >
-              <div className="movie_card" id="bright">
-                <div className="info_section">
-                  <div className="movie_header">
-                    <img
-                      className="locandina"
-                      src={detailMovie.poster_path}
-                      alt=""
-                    />
-                    <h1>{detailMovie.title}</h1>
-                    <h4>{detailMovie.release_date}</h4>
-                    <span className="minutes">{detailMovie.runtime} min</span>
-                    <p className="type">{detailMovie.genres}</p>
-                  </div>
-                  <div className="movie_desc">
-                    <p className="text">{detailMovie.overview}</p>
-                  </div>
-                </div>
-                <div>
-                  <img
-                    className="blur_back bright_back"
-                    src={detailMovie.poster_path}
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div
-                className="movie_card"
-                id="bright"
-                style={{ width: "1000px", height: "700px" }}
-              >
-                <iframe
-                  title="movie"
-                  src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
-                  width="1000"
-                  height="700"
-                  allow="fullscreen"
-                />
-              </div>
-              <hr />
+    <>
+      {detailMovie.length === 0 ? (
+        ""
+      ) : (
+        <>
+          <div>
+            <img
+              alt=""
+              id="postertest"
+              className="poster"
+              src={detailMovie.backdrop_path}
+            />
+          </div>
 
-              <div className="pt-8 pb-2 mb-3 border-bottom">
-                <div className="row">
-                  <h1>Cast</h1>
-                </div>
-                <div className="scrollmenu">
-                  {cast
-                    ? cast.map((item) => (
-                        <div className="card-view">
-                          <div className="card-header">
-                            <Link to={`/detail/${item.id_cast}`}>
-                              <img
-                                src={item.profile_path}
-                                alt=""
-                                style={{ width: "180px" }}
-                              />
-                            </Link>
-                          </div>
-                          <div className="card-movie-content">
-                            <div className="card-movie-content-head">
-                              <h2 className="card-movie-title">{item.name}</h2>
-                            </div>
-                            <div className="card-movie-info">
-                              <div className="movie-running-time">
-                                <div className="text">Character</div>
-                                <span>{item.character}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    : ""}
-                </div>
-              </div>
-
-              <hr />
-              <div>
-                <div>Favorite:</div>
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="meta-data-container col-xs-12 col-md-8 push-md-4 col-lg-7 push-lg-5">
+              <h1>
+                {detailMovie.title}{" "}
                 <button
-                  className="likedMovie"
+                  classNameName="likedMovie"
                   onClick={toggleLiked}
                   type="button"
                 >
@@ -287,72 +225,178 @@ function Detail() {
                     />
                   )}
                 </button>
-                <div>Rating:</div>
-                <ReactStars
-                  count={5}
-                  onChange={ratingChanged}
-                  size={24}
-                  activeColor="#ffd700"
-                />
-                <div>Comment:</div>
-                <div className="textarea">
-                  <textarea
-                    cols="110"
-                    rows="5"
-                    ref={textInput}
-                    placeholder="Add comment..."
-                  />
-                </div>
-                <div className="btn">
-                  <button
-                    className="btn btn-primary"
-                    onClick={addComment}
-                    type="submit"
-                  >
-                    Post
-                  </button>
+              </h1>
+              <span className="tagline">
+                <h2>{detailMovie.tagline}</h2>
+                {detailMovie.genres} | {detailMovie.runtime} mins|
+                {detailMovie.release_date}
+              </span>
+              <p style={{ marginTop: "6.5vh" }}>
+                <h4>SYNOPSIS</h4>
+                {detailMovie.overview}
+              </p>
+
+              <div className="additional-details">
+                <span className="genre-list"></span>
+                <span className="production-list"></span>
+                <div className="nopadding release-details">
+                  <div className="col-xs-6">
+                    Directed by:
+                    <span className="meta-data">{detailMovie.director}</span>
+                  </div>
+                  <div className="col-xs-6">
+                    Status:
+                    <span className="meta-data">{detailMovie.status}</span>
+                  </div>
+                  <div className="col-xs-6">
+                    Vote Count:
+                    <span className="meta-data">{detailMovie.vote_count}</span>
+                  </div>
+                  <div className="col-xs-6">
+                    Vote Average:
+                    <span className="meta-data">
+                      {detailMovie.vote_average} / 10
+                    </span>
+                  </div>
+
+                  <div className="col-xs-6">
+                    <button
+                      type="button"
+                      className="btn btn-red btn-lg"
+                      data-toggle="modal"
+                      data-target="#myModal"
+                      onClick={handleShow}
+                    >
+                      Watch Trailer
+                    </button>
+                    <Modal show={show} onHide={handleClose} size="lg">
+                      <Modal.Header closeButton>
+                        <Modal.Title>Youtube</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <div className="modal-body">
+                          <div className="video-container">
+                            <div>
+                              <iframe
+                                title="x"
+                                width="auto"
+                                height="auto"
+                                className="youtube"
+                                src="https://www.youtube.com/"
+                                allowfullscreen=""
+                              ></iframe>
+                            </div>
+                          </div>
+                        </div>
+                      </Modal.Body>
+                    </Modal>
+                  </div>
+                  <div className="col-xs-6">
+                    <a
+                      href="/nowplaying"
+                      className="btn-lg btn-green"
+                      style={{ pointerEvents: "none" }}
+                    >
+                      View More
+                    </a>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {newComment.map((item) => (
-                <div className="row">
-                  <div className="col-sm-12">
-                    <hr />
-                    <div className="row">
-                      <div className="col-sm-3">
-                        <img
-                          src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/60/000000/external-user-interface-kiranshastry-solid-kiranshastry.png"
-                          alt=""
-                        />
-                        <div className="review-block-name">{item.name}</div>
-                        <div className="review-block-date">
-                          {item.date}
-                          <br />
-                          {item.hour}
-                        </div>
-                      </div>
-                      <div className="col-sm-9">
-                        <div className="review-block-rate">
-                          {[...Array(item.rating)].map(() => (
+            <div className="poster-container nopadding col-xs-12 col-md-4 pull-md-8 col-lg-5 pull-lg-7 ">
+              <img className="poster" src={detailMovie.poster_path} alt="" />
+            </div>
+          </div>
+
+          {/** MOVIE PARTs */}
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>WATCH NOW</h3>
+
+              <iframe
+                title="movie"
+                src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
+                width="1000"
+                height="700"
+                allow="fullscreen"
+              />
+            </div>
+          </div>
+          {/** CAST DETAILS */}
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>STARRING</h3>
+              <div style={{ marginTop: "50px" }} className="row row-flex">
+                {cast
+                  ? cast.map((item) => (
+                      <div className="col-md-3">
+                        <div className="responsive-circle">
+                          <div>
                             <img
-                              src="https://img.icons8.com/fluency/24/000000/star.png"
+                              src={item.profile_path}
+                              className="image--cover"
                               alt=""
                             />
-                          ))}
+                            <figcaption>{item.name}</figcaption>
+                          </div>
                         </div>
-                        <div className="review-block-description">
+                      </div>
+                    ))
+                  : ""}
+              </div>
+            </div>
+          </div>
+          {/**COMMENT */}
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>COMMENT</h3>
+              <div classNameName="textarea">
+                <textarea
+                  cols="110"
+                  rows="5"
+                  ref={textInput}
+                  placeholder="Add comment..."
+                />
+              </div>
+              <div classNameName="btn">
+                <button
+                  classNameName="btn btn-primary"
+                  onClick={addComment}
+                  type="submit"
+                >
+                  Post
+                </button>
+              </div>
+              <div className="wrapper">
+                {newComment.map((item) => (
+                  <div classNameName="row">
+                    <div classNameName="col-sm-12">
+                      <hr />
+                      <div classNameName="row">
+                        <span className="tagline">
+                          <h2>{item.name}</h2>
+                          {item.date} at {item.hour}
+                        </span>
+                        <p
+                          style={{
+                            marginTop: "3.5vh",
+                            color: "white",
+                            fontSize: "25px"
+                          }}
+                        >
                           {item.comment}
-                        </div>
+                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </main>
+                ))}{" "}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </>
+      )}
+    </>
   );
 }
 
