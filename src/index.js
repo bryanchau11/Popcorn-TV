@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 //import "./index.css";
 import App from "./App";
 import TopRated from "./components/TopRated";
@@ -20,8 +20,9 @@ import Disclaimer from "./components/Disclaimer";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
+      <Route path="/" element={<App />} />
       <Route path="/index" element={<App />} />
       <Route path="/top_rated" element={<TopRated />} />
       <Route path="/search/:movieName" element={<Search />} />
@@ -40,7 +41,7 @@ ReactDOM.render(
       <Route path="/disclaimer" element={<Disclaimer />} />
     </Routes>
     <Footer />
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById("root")
 );
 
