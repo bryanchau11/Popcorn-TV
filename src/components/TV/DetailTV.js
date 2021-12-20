@@ -250,17 +250,47 @@ function DetailTV() {
         console.error(error);
       });
   }, [tvID]);
-  function handleChange(evt) {
-    const value = evt.target.value;
-    const numStr = value.match(/\d/g).join("");
-    setSeason(parseInt(numStr[0]));
 
-    setEpisode(parseInt(numStr.substring(1)));
+  function handleSeasonChange(evt) {
+    const value = evt.target.value;
+    //const numStr = value.match(/\d/g).join("");
+    //setSeason(parseInt(numStr[0]));
+
+    //setEpisode(parseInt(numStr.substring(1)));
+    setSeason(value);
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/tv/${tvID}/season/${value}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    };
+    const lst = [];
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data.episodes;
+        console.log(result);
+        for (var i = 0; i < result.length; i++) {
+          lst.push({
+            episode_number: result[i]["episode_number"],
+            air_date: result[i]["air_date"],
+            name: result[i]["name"],
+            overview: result[i]["overview"],
+            runtime: detailTV[0].runtime,
+            vote_average: result[i]["vote_average"],
+            still_path: result[i]["still_path"]
+          });
+        }
+        setEpisodeList(lst);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   return (
     <>
       {detailTV.length === 0 ? (
@@ -390,23 +420,66 @@ function DetailTV() {
                 <span style={{ color: "#00fc87" }}> {season} </span> | EPISODE:{" "}
                 <span style={{ color: "#00fc87" }}> {episode} </span>
               </h3>
-              <h3>
-                {/* <select onChange={handleChange}>
+
+              {/* <select onChange={handleChange}>
                   {tvList
                     ? tvList.map((item) => (
                         <option value={item.label}>{item.label}</option>
                       ))
                     : ""}
                 </select>* */}
-                <select onChange={handleChange}>
-                  {seasonList
-                    ? seasonList.map((item) => (
-                        <option value={item.value}>{item.label}</option>
-                      ))
-                    : ""}
-                </select>
-              </h3>
-              <div className="video-container">
+              <select onChange={handleSeasonChange}>
+                <option value={1} selected disabled hidden>
+                  season 1
+                </option>
+                {seasonList
+                  ? seasonList.map((item) => (
+                      <option value={item.value}>{item.label}</option>
+                    ))
+                  : ""}
+              </select>
+              {episodeList.length !== 0
+                ? episodeList.map((item) => (
+                    <a href="#tvShow" style={{ textDecoration: "none" }}>
+                      <div
+                        className="movie_card"
+                        id="bright"
+                        onClick={() => setEpisode(item.episode_number)}
+                      >
+                        <div className="info_section">
+                          <div className="movie_header">
+                            <img
+                              className="locandina"
+                              src={`https://image.tmdb.org/t/p/original${item.still_path}`}
+                              alt=""
+                            />
+                            <h4>{item.name}</h4>
+                            <span style={{ color: "white", fontSize: "15px" }}>
+                              {item.air_date}
+                            </span>
+                            <br />
+                            <span className="minutes">{item.runtime} min</span>
+                            <p className="type">{item.vote_average}/10</p>
+                          </div>
+                          <div className="movie_desc">
+                            <p className="text">{item.overview}</p>
+                          </div>
+                        </div>
+                        <div
+                          className="blur_back"
+                          style={{
+                            backgroundImage: `url(https://image.tmdb.org/t/p/original${item.still_path})`
+                          }}
+                        ></div>
+                      </div>
+                    </a>
+                  ))
+                : ""}
+            </div>
+          </div>
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <div className="video-container" id="tvShow">
                 <iframe
                   title="movie"
                   src={`https://www.2embed.ru/embed/tmdb/tv?id=${tvID}&s=${season}&e=${episode}`}
