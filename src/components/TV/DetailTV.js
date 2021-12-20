@@ -373,6 +373,35 @@ function DetailTV() {
               <img className="poster" src={detailTV[0].poster_path} alt="" />
             </div>
           </div>
+
+          {/** MOVIE PARTs */}
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper">
+              <h3>
+                WATCH NOW | SEASON:{" "}
+                <span style={{ color: "#00fc87" }}> {season} </span> | EPISODE:{" "}
+                <span style={{ color: "#00fc87" }}> {episode} </span>
+              </h3>
+              <h3>
+                <select onChange={handleChange}>
+                  {tvList
+                    ? tvList.map((item) => (
+                        <option value={item.label}>{item.label}</option>
+                      ))
+                    : ""}
+                </select>
+              </h3>
+              <div className="video-container">
+                <iframe
+                  title="movie"
+                  src={`https://www.2embed.ru/embed/tmdb/tv?id=${tvID}&s=${season}&e=${episode}`}
+                  width="1000"
+                  height="700"
+                  allow="fullscreen"
+                />
+              </div>
+            </div>
+          </div>
           {/** CAST DETAILS */}
           <div className="col-xs-12 cardcont nopadding">
             <div className="wrapper">
@@ -397,38 +426,12 @@ function DetailTV() {
               </div>
             </div>
           </div>
-
-          {/** MOVIE PARTs */}
-          <div className="col-xs-12 cardcont nopadding">
-            <div className="wrapper">
-              <h3>
-                WATCH NOW | SEASON:{" "}
-                <span style={{ color: "#00fc87" }}> {season} </span> | EPISODE:{" "}
-                <span style={{ color: "#00fc87" }}> {episode} </span>
-              </h3>
-              <h3>
-                <select onChange={handleChange}>
-                  {tvList
-                    ? tvList.map((item) => (
-                        <option value={item.label}>{item.label}</option>
-                      ))
-                    : ""}
-                </select>
-              </h3>
-              <iframe
-                title="movie"
-                src={`https://www.2embed.ru/embed/tmdb/tv?id=${tvID}&s=${season}&e=${episode}`}
-                width="1000"
-                height="700"
-                allow="fullscreen"
-              />
-            </div>
-          </div>
           <div className="col-xs-12 cardcont nopadding">
             <div className="wrapper">
               <h3>COMMENT</h3>
               <div classNameName="textarea">
                 <textarea
+                  style={{ maxWidth: "95%" }}
                   cols="110"
                   rows="5"
                   ref={textInput}
