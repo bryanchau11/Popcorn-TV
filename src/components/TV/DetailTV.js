@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
+import EmblaCarousel from "embla-carousel-react";
 import { Modal, Button } from "react-bootstrap";
 //import ReactStars from "react-rating-stars-component";
 import "../../style/Detail.css";
@@ -291,6 +292,31 @@ function DetailTV() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // List of images
+  const [imageList, setImageList] = useState([]);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/tv/${tvID}/season/${season}/episode/${episode}/images?api_key=${process.env.REACT_APP_API_KEY}`
+    };
+    const lst = [];
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data.stills;
+        for (var i = 0; i < result.length; i++) {
+          lst.push({
+            stills:
+              "https://image.tmdb.org/t/p/original" + result[i]["file_path"]
+          });
+        }
+        setImageList(lst);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [season, episode]);
+
   return (
     <>
       {detailTV.length === 0 ? (
@@ -311,7 +337,7 @@ function DetailTV() {
               <h1>
                 {detailTV[0].name}{" "}
                 <button
-                  classNameName="likedMovie"
+                  className="likedMovie"
                   onClick={toggleLiked}
                   type="button"
                 >
@@ -514,10 +540,34 @@ function DetailTV() {
               </div>
             </div>
           </div>
+          {/** 
+          <div className="col-xs-12 cardcont nopadding">
+            <div className="wrapper slick-slider">
+              <h3>Images</h3>
+
+              <div class="slider">
+                <div class="slide-track">
+                  {imageList.length === 0
+                    ? ""
+                    : imageList.map((item) => (
+                        <div class="slide">
+                          <img
+                            src={item.stills}
+                            alt=""
+                            className="img-responsive"
+                            id="movie-summary-img"
+                          />
+                        </div>
+                      ))}
+                </div>
+              </div>
+            </div>
+          </div>
+           */}
           <div className="col-xs-12 cardcont nopadding">
             <div className="wrapper">
               <h3>COMMENT</h3>
-              <div classNameName="textarea">
+              <div className="textarea">
                 <textarea
                   style={{ maxWidth: "95%" }}
                   cols="110"
@@ -526,9 +576,9 @@ function DetailTV() {
                   placeholder="Add comment..."
                 />
               </div>
-              <div classNameName="btn">
+              <div className="btn">
                 <button
-                  classNameName="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={addComment}
                   type="submit"
                 >
@@ -537,10 +587,10 @@ function DetailTV() {
               </div>
               <div className="wrapper">
                 {newComment.map((item) => (
-                  <div classNameName="row">
-                    <div classNameName="col-sm-12">
+                  <div className="row">
+                    <div className="col-sm-12">
                       <hr />
-                      <div classNameName="row">
+                      <div className="row">
                         <span className="tagline">
                           <h2>{item.name}</h2>
                           {item.date} at {item.hour}
