@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
-import ReactStars from "react-rating-stars-component";
+//import ReactStars from "react-rating-stars-component";
 import "../../style/Detail.css";
 import "../../style/bootstrap.min.css";
 //import "../../App.css";
-import SearchBar from "../SearchBar";
-
-import NavigationMenu from "../NavigationMenu";
+//import SearchBar from "../SearchBar";
+//import NavigationMenu from "../NavigationMenu";
 import axios from "axios";
 
 function DetailTV() {

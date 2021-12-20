@@ -22,6 +22,10 @@ def get_detail():
         runtime,
         genres,
         overview,
+        backdrop_path,
+        tagline,
+        vote_count,
+        status,
     ) = get_detail_movie(movie_id)
 
     detail_movie = {
@@ -33,6 +37,11 @@ def get_detail():
         "runtime": runtime,
         "genres": genres,
         "overview": overview,
+        "backdrop_path": backdrop_path,
+        "tagline": tagline,
+        "vote_count": vote_count,
+        "status": status,
+        "director": "N/A",
     }
     data = json.dumps(detail_movie)
 
