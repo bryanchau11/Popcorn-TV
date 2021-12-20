@@ -313,14 +313,15 @@ function Detail() {
           <div className="col-xs-12 cardcont nopadding">
             <div className="wrapper">
               <h3>WATCH NOW</h3>
-
-              <iframe
-                title="movie"
-                src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
-                width="1000"
-                height="700"
-                allow="fullscreen"
-              />
+              <div className="video-container">
+                <iframe
+                  title="movie"
+                  src={`https://www.2embed.ru/embed/tmdb/movie?id=${movieID}`}
+                  width="1000"
+                  height="700"
+                  allow="fullscreen"
+                />
+              </div>
             </div>
           </div>
           {/** CAST DETAILS */}
@@ -353,6 +354,7 @@ function Detail() {
               <h3>COMMENT</h3>
               <div classNameName="textarea">
                 <textarea
+                  style={{ maxWidth: "95%" }}
                   cols="110"
                   rows="5"
                   ref={textInput}
