@@ -49,7 +49,7 @@ function NavigationMenu() {
                   alt=""
                 />
                 <div>
-                  <Link to="/index">Popular Movies</Link>
+                  <Link to="/">Popular Movies</Link>
                 </div>
               </div>
             </li>

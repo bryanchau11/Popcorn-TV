@@ -235,7 +235,7 @@ function App() {
                   <PaginationItem
                     component={Link}
                     style={{ color: "white" }}
-                    to={`/index${item.page === 1 ? "" : `?page=${item.page}`}`}
+                    to={`/${item.page === 1 ? "" : `?page=${item.page}`}`}
                     {...item}
                   />
                 )}
