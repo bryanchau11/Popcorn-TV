@@ -7,13 +7,12 @@ function Disclaimer() {
   return (
     <div className="App">
       <div className="container p-0">
-        <SearchBar />
         <div className="container-fluid">
           <div className="row">
             <NavigationMenu />
             <main
               role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              className="movie_list"
               style={{ paddingTop: "50px" }}
             >
               <h1>Disclaimer for Popcorn TV</h1>

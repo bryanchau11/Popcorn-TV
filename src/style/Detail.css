@@ -189,55 +189,6 @@ div.scrollmenu a {
   
 }
 
-.navbar-default .navbar-brand {
-  background: #e50914;
-  color: #ffffff;
-  padding: 1em;
-  font-size: 4vh;
-  min-height: 80px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  -moz-transition: -moz-transform 0.2s ease-out;
-  -webkit-transition: -webkit-transform 0.2s ease-out;
-  -ms-transition: -ms-transform 0.2s ease-out;
-  transition: transform 0.2s ease-out;
-}
-
-.navbar-default .navbar-brand:hover,.navbar-default .navbar-brand a:hover {
-  background: #e50914;
-  color: #ffffff;
-  -moz-transform: scale(1.05);
-  -webkit-transform: scale(1.05);
-  -ms-transform: scale(1.05);
-  transform: scale(1.05);
-}
-
-.navbar .navbar-nav {
-  width: 100%;
-  text-align: center;
-  color: #ffffff;
-}
-
-.navbar .navbar-nav li {
-    float: none;
-    display: inline-block;
-}
-
-.navbar .navbar-nav li a {
-  font-size: 2vh;
-  color: #ffffff;
-}
-
-.navbar .navbar-nav li a:hover {
-  color: #e50914;
-}
-
-.navbar-default .navbar-nav > .active > a,.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus{
-  font-weight: bold;
-  background-color: #e50914;
-  color: #ffffff;
-}
 
 .fa-play-circle, .fa-star, .fa-arrow-alt-circle-up, .fa-calendar-alt{
   padding-right: 6px;

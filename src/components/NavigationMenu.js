@@ -253,7 +253,9 @@ function NavigationMenu() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
+              <Nav.Link as={Link} to="/favorite">
+                SAVE FOR LATER
+              </Nav.Link>
               <NavDropdown title="MOVIES" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/">
                   <img
@@ -309,7 +311,7 @@ function NavigationMenu() {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Nav>
+            <Nav className="ms-auto">
               <Form className="d-flex" onSubmit={searchMovie}>
                 <FormControl
                   type="search"
