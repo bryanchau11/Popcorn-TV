@@ -49,7 +49,6 @@ function TopRated() {
       <div className="container p-0">
         <div className="container-fluid">
           <div className="row">
-            <NavigationMenu />
             <main
               role="main"
               className="movie_list"
