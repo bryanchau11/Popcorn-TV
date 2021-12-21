@@ -408,8 +408,6 @@ function DetailTV() {
                             <div>
                               <iframe
                                 title="x"
-                                width="auto"
-                                height="auto"
                                 className="youtube"
                                 src="https://www.youtube.com/"
                                 allowfullscreen=""
@@ -509,9 +507,8 @@ function DetailTV() {
                 <iframe
                   title="movie"
                   src={`https://www.2embed.ru/embed/tmdb/tv?id=${tvID}&s=${season}&e=${episode}`}
-                  width="1000"
-                  height="700"
                   allow="fullscreen"
+                  className="responsive-iframe"
                 />
               </div>
             </div>

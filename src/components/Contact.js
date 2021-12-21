@@ -35,13 +35,11 @@ function Contact() {
   return (
     <div className="Contact">
       <div className="container p-0">
-        <SearchBar />
         <div className="container-fluid">
           <div className="row">
-            <NavigationMenu />
             <main
               role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              className="movie_list"
               style={{ paddingTop: "50px" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">

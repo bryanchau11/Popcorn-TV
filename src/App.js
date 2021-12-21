@@ -66,7 +66,8 @@ function App() {
             lst.push({
               id_movie: result[i].id,
               poster_path:
-                "https://image.tmdb.org/t/p/w200" + result[i]["poster_path"],
+                "https://image.tmdb.org/t/p/original" +
+                result[i]["poster_path"],
               title: result[i]["original_name"],
               vote_average: result[i]["vote_average"],
               release_date: result[i]["first_air_date"],
@@ -78,7 +79,8 @@ function App() {
             lst.push({
               id_movie: result[i].id,
               poster_path:
-                "https://image.tmdb.org/t/p/w200" + result[i]["poster_path"],
+                "https://image.tmdb.org/t/p/original" +
+                result[i]["poster_path"],
               title: result[i]["title"],
               vote_average: result[i]["vote_average"],
               release_date: result[i]["release_date"],
@@ -92,16 +94,15 @@ function App() {
         console.error(error);
       });
   }, [mediaType, timeWindow]);
+
   return (
     <div className="App">
       <div className="container p-0">
-        <SearchBar />
         <div className="container-fluid">
           <div className="row">
-            <NavigationMenu />
             <main
               role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              className="movie_list"
               style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
@@ -199,12 +200,16 @@ function App() {
                         <h4 className="card-title">{item.title}</h4>
 
                         <div className="containerCard">
-                          <div className="row">
-                            <div className="col-sm-4 metadata">
-                              <i className="fa fa-star" aria-hidden="true"></i>
+                          <div className="row" style={{ marginTop: "0" }}>
+                            <div className="col-sm-6 metadata">
+                              <i
+                                className="fa fa-star"
+                                style={{ fontSize: "20px" }}
+                                aria-hidden="true"
+                              ></i>
                               <p>{item.vote_average}/10</p>
                             </div>
-                            <div className="col-sm-8 metadata">
+                            <div className="col-sm-6 metadata">
                               {item.release_date}
                             </div>
                           </div>

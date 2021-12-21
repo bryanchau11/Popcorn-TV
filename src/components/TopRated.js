@@ -47,13 +47,11 @@ function TopRated() {
   return (
     <div className="TopRated">
       <div className="container p-0">
-        <SearchBar />
         <div className="container-fluid">
           <div className="row">
-            <NavigationMenu />
             <main
               role="main"
-              className="col-md-9 ml-sm-auto col-lg-10 px-4 movie_list"
+              className="movie_list"
               style={{ paddingTop: "50px", backgroundColor: "#150050" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
@@ -82,15 +80,16 @@ function TopRated() {
                             <h4 className="card-title">{item.title}</h4>
 
                             <div className="containerCard">
-                              <div className="row">
-                                <div className="col-sm-4 metadata">
+                              <div className="row" style={{ marginTop: "0" }}>
+                                <div className="col-sm-6 metadata">
                                   <i
                                     className="fa fa-star"
+                                    style={{ fontSize: "20px" }}
                                     aria-hidden="true"
                                   ></i>
                                   <p>{item.vote_average}/10</p>
                                 </div>
-                                <div className="col-sm-8 metadata">
+                                <div className="col-sm-6 metadata">
                                   {item.release_date}
                                 </div>
                               </div>

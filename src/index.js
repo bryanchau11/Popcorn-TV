@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 //import "./index.css";
+
 import App from "./App";
+import NavigationMenu from "./components/NavigationMenu";
 import TopRated from "./components/TopRated";
 import Search from "./components/Search";
 import Detail from "./components/Detail";
@@ -21,6 +23,7 @@ import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <HashRouter>
+    <NavigationMenu />
     <Routes>
       <Route path="/" element={<App />} />
 

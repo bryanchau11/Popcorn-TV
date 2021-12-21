@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap");
+
+
+
+.card:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
+    z-index: 1;
+}
+
+
+
