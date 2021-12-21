@@ -100,15 +100,16 @@ function TopRatedTV() {
                             <h4 className="card-title">{item.title}</h4>
 
                             <div className="containerCard">
-                              <div className="row">
-                                <div className="col-sm-4 metadata">
+                              <div className="row" style={{ marginTop: "0" }}>
+                                <div className="col-sm-6 metadata">
                                   <i
                                     className="fa fa-star"
+                                    style={{ fontSize: "20px" }}
                                     aria-hidden="true"
                                   ></i>
                                   <p>{item.vote_average}/10</p>
                                 </div>
-                                <div className="col-sm-8 metadata">
+                                <div className="col-sm-6 metadata">
                                   {item.release_date}
                                 </div>
                               </div>
