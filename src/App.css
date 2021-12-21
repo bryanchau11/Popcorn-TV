@@ -79,7 +79,7 @@ a:hover {
 }
 
 .movie_list {
-  margin-top: 5rem;
+  margin-top: 40px;
   padding-left: 4rem !important;
 }
 
@@ -219,7 +219,6 @@ div.scrollmenu {
 div.scrollmenu a {
   display: inline-block;
   text-align: center;
-  padding: 14px;
   text-decoration: none;
 }
 

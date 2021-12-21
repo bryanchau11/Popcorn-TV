@@ -184,10 +184,9 @@ div.scrollmenu a {
 
 .navbar{
   min-height: 80px;
-  margin-top: 20px;
   min-width: 50vh;
   background: #081c24;
-  border-radius: 10px;
+  
 }
 
 .navbar-default .navbar-brand {
@@ -270,9 +269,7 @@ div.scrollmenu a {
   background-color: inherit;
 }
 
-.row{
-  margin-top: 90px;
-}
+
 
 #content{
   height: auto;
