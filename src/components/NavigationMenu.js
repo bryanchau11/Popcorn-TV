@@ -312,6 +312,9 @@ function NavigationMenu() {
               </NavDropdown>
             </Nav>
             <Nav className="ms-auto">
+              <Button as={Link} to="/korean" variant="warning">
+                KOREAN MOVIES
+              </Button>
               <Form className="d-flex" onSubmit={searchMovie}>
                 <FormControl
                   type="search"
