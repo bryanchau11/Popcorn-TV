@@ -189,6 +189,29 @@ function Detail() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // Get trailer
+  const [youtubeID, setYoutubeID] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        const res = response.data.results;
+        var trailer = "";
+        for (var i in res) {
+          if (res[i].type === "Trailer") {
+            trailer = res[i].key;
+          }
+        }
+        setYoutubeID(trailer);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [movieID]);
   return (
     <>
       {detailMovie.length === 0 ? (
@@ -280,8 +303,8 @@ function Detail() {
                               <iframe
                                 title="x"
                                 className="youtube"
-                                src="https://www.youtube.com/"
                                 allowfullscreen=""
+                                src={`https://www.youtube.com/embed/${youtubeID}`}
                               ></iframe>
                             </div>
                           </div>

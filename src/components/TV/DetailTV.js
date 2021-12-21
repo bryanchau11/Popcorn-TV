@@ -316,7 +316,29 @@ function DetailTV() {
         console.error(error);
       });
   }, [season, episode]);
-
+  // Get trailer
+  const [youtubeID, setYoutubeID] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/tv/${tvID}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        const res = response.data.results;
+        var trailer = "";
+        for (var i in res) {
+          if (res[i].type === "Trailer") {
+            trailer = res[i].key;
+          }
+        }
+        setYoutubeID(trailer);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, [tvID]);
   return (
     <>
       {detailTV.length === 0 ? (
@@ -409,7 +431,7 @@ function DetailTV() {
                               <iframe
                                 title="x"
                                 className="youtube"
-                                src="https://www.youtube.com/"
+                                src={`https://www.youtube.com/embed/${youtubeID}`}
                                 allowfullscreen=""
                               ></iframe>
                             </div>
