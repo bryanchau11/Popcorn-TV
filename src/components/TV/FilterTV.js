@@ -107,7 +107,7 @@ function FilterTV() {
             <main
               role="main"
               className="movie_list"
-              style={{ paddingTop: "50px", backgroundColor: "#150050" }}
+              style={{ paddingTop: "50px", backgroundColor: "#181818" }}
             >
               <div className="pt-8 pb-2 mb-3 border-bottom">
                 <div className="row">
@@ -138,7 +138,7 @@ function FilterTV() {
                             width: "18rem",
                             margin: "20px",
                             padding: "0px",
-                            backgroundColor: "#3F0071",
+                            backgroundColor: "#080808",
                             color: "white"
                           }}
                         >
