@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 var axios = require("axios").default;
 function Filter() {
   const [genre, setGenre] = useState("");
+  const [language, setLanguage] = useState("");
   const [filterMovie, setFilterMovie] = useState([]);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -20,28 +21,20 @@ function Filter() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ movie_genre: genre, page: page })
+      body: JSON.stringify({
+        movie_genre: genre,
+        page: page,
+        language: language
+      })
     })
       .then((response) => response.json())
       .then((data) => {
         const result = JSON.parse(data.filter);
         setFilterMovie(result.filter_movie);
       });
-  }, [genre, page]);
-  const filter = () => {
-    fetch("/filter", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ movie_genre: genre, page: page })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const result = JSON.parse(data.filter);
-        setFilterMovie(result.filter_movie);
-      });
-  };
+  }, [genre, page, language]);
+
+  // get genreList
   const [genreList, setGenreList] = useState(null);
   useEffect(() => {
     const options = {
@@ -57,6 +50,30 @@ function Filter() {
           lst.push({ value: result[i].id, name: result[i].name });
         }
         setGenreList(lst);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
+  // Get Language list
+  const [languageList, setLanguageList] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/configuration/languages?api_key=${process.env.REACT_APP_API_KEY}`
+    };
+    const lst = [];
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data;
+        for (var i = 0; i < result.length; i++) {
+          lst.push({
+            value: result[i]["iso_639_1"],
+            name: result[i]["english_name"]
+          });
+        }
+        setLanguageList(lst);
       })
       .catch(function (error) {
         console.error(error);
@@ -78,7 +95,7 @@ function Filter() {
       .catch(function (error) {
         console.error(error);
       });
-  }, [genre]);
+  }, [genre, language]);
   return (
     <div className="Favorite">
       <div className="container p-0">
@@ -94,20 +111,24 @@ function Filter() {
                   <h1 style={{ color: "white" }}>Filter Movies</h1>
                 </div>
                 <div className="classic">
-                  <select onChange={(event) => setGenre(event.target.value)}>
-                    {genreList
-                      ? genreList.map((item) => (
-                          <option value={item.value}>{item.name}</option>
-                        ))
-                      : ""}
-                  </select>
-                  <button
-                    className="btn btn-primary btn-filter"
-                    onClick={filter}
-                    type="submit"
-                  >
-                    Filter
-                  </button>
+                  <span>
+                    <select onChange={(event) => setGenre(event.target.value)}>
+                      {genreList
+                        ? genreList.map((item) => (
+                            <option value={item.value}>{item.name}</option>
+                          ))
+                        : ""}
+                    </select>
+                    <select
+                      onChange={(event) => setLanguage(event.target.value)}
+                    >
+                      {languageList
+                        ? languageList.map((item) => (
+                            <option value={item.value}>{item.name}</option>
+                          ))
+                        : ""}
+                    </select>
+                  </span>
                 </div>
                 <div className="row">
                   {filterMovie
@@ -165,7 +186,7 @@ function Filter() {
               <Pagination
                 style={{ color: "white" }}
                 page={page}
-                count={500}
+                count={count}
                 size="large"
                 color="primary"
                 renderItem={(item) => (

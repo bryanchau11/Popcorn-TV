@@ -13,6 +13,7 @@ def get_filter():
     """
     movie_genre = flask.request.json.get("movie_genre")
     page = flask.request.json.get("page")
+    language = flask.request.json.get("language")
     (
         id_movie,
         poster_path,
@@ -20,7 +21,7 @@ def get_filter():
         vote_average,
         release_date,
         popularity,
-    ) = get_filter_movie(movie_genre, page)
+    ) = get_filter_movie(movie_genre, page, language)
 
     filter_movie = [
         {
