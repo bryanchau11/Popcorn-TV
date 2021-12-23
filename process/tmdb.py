@@ -189,7 +189,7 @@ def get_search_movie(movie_name, page):
     )
 
 
-def get_filter_movie(movie_genre, page):
+def get_filter_movie(movie_genre, page, language):
     """
     Filter for movies that are related to the genres the user selects for from TheDBMovie.
     """
@@ -197,7 +197,7 @@ def get_filter_movie(movie_genre, page):
         "https://api.themoviedb.org/3/discover/movie?api_key="
         + os.getenv("API_KEY")
         + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video="
-        + f"false&page={page}&with_genres="
+        + f"false&with_original_language={language}&page={page}&with_genres="
         + movie_genre,
     )
     tmdb_response_json = tmdb_response.json()
