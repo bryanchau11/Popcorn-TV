@@ -3,8 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import "./style/bootstrap.min.css";
 import "./App.css";
 import "./style/Filter.css";
-import SearchBar from "./components/SearchBar";
-import NavigationMenu from "./components/NavigationMenu";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Typography from "@mui/material/Typography";
@@ -127,14 +125,19 @@ function App() {
                 <div className="scrollmenu">
                   {trending
                     ? trending.map((item) => (
-                        <div className="card-view">
+                        <div
+                          className="card-view"
+                          style={{
+                            width: "14rem"
+                          }}
+                        >
                           <div className="card-header">
                             {mediaType === "movie" ? (
                               <Link to={`/detail/${item.id_movie}`}>
                                 <img
                                   src={item.poster_path}
                                   alt=""
-                                  style={{ width: "180px" }}
+                                  style={{ width: "205px" }}
                                 />
                               </Link>
                             ) : (
@@ -142,29 +145,39 @@ function App() {
                                 <img
                                   src={item.poster_path}
                                   alt=""
-                                  style={{ width: "180px" }}
+                                  style={{ width: "205px" }}
                                 />
                               </Link>
                             )}
                           </div>
-                          <div className="card-movie-content">
-                            <div className="card-movie-content-head">
-                              <h3 className="card-movie-title">
-                                {item.title.substring(0, 10) + "..."}
-                              </h3>
-                              <div className="ratings">
-                                <span>{item.vote_average}</span>
-                                /10
-                              </div>
-                            </div>
-                            <div className="card-movie-info">
-                              <div className="movie-running-time">
-                                <div className="text">Release Date</div>
-                                <span>{item.release_date}</span>
-                              </div>
-                              <div className="movie-running-time">
-                                <div className="text">Popularity</div>
-                                <span>{item.popularity}</span>
+                          <div
+                            className="card-body"
+                            style={{ backgroundColor: "black" }}
+                          >
+                            <span
+                              style={{ color: "#00fc87" }}
+                              className="card-title"
+                            >
+                              {item.title.substring(0, 23) + "."}
+                            </span>
+                            <div className="containerCard">
+                              <div className="row" style={{ marginTop: "0" }}>
+                                <div className="col-sm-6 metadata">
+                                  <i
+                                    className="fa fa-star"
+                                    style={{ fontSize: "20px" }}
+                                    aria-hidden="true"
+                                  ></i>
+                                  <p style={{ color: "#00fc87" }}>
+                                    {item.vote_average}/10
+                                  </p>
+                                </div>
+                                <div
+                                  style={{ color: "#00fc87" }}
+                                  className="col-sm-6 metadata"
+                                >
+                                  {item.release_date}
+                                </div>
                               </div>
                             </div>
                           </div>
