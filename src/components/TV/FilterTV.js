@@ -12,6 +12,7 @@ import PaginationItem from "@mui/material/PaginationItem";
 var axios = require("axios").default;
 function FilterTV() {
   const [genre, setGenre] = useState("");
+  const [language, setLanguage] = useState("");
   const [filterTV, setFilterTV] = useState([]);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -20,7 +21,7 @@ function FilterTV() {
   useEffect(() => {
     const options = {
       method: "GET",
-      url: `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}&with_genres=${genre}&include_null_first_air_dates=false`
+      url: `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&with_original_language=${language}&sort_by=popularity.desc&page=${page}&with_genres=${genre}&include_null_first_air_dates=false`
     };
     const lst = [];
     axios
@@ -47,7 +48,7 @@ function FilterTV() {
       .catch(function (error) {
         console.error(error);
       });
-  }, [genre, page]);
+  }, [genre, page, language]);
   const filter = () => {
     fetch("/filter", {
       method: "POST",
@@ -82,11 +83,35 @@ function FilterTV() {
         console.error(error);
       });
   }, []);
+  // Get Language list
+  const [languageList, setLanguageList] = useState(null);
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/configuration/languages?api_key=${process.env.REACT_APP_API_KEY}`
+    };
+    const lst = [];
+    axios
+      .request(options)
+      .then(function (response) {
+        const result = response.data;
+        for (var i = 0; i < result.length; i++) {
+          lst.push({
+            value: result[i]["iso_639_1"],
+            name: result[i]["english_name"]
+          });
+        }
+        setLanguageList(lst);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
   const [count, setCount] = useState(null);
   useEffect(() => {
     const options = {
       method: "GET",
-      url: `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=${genre}&include_null_first_air_dates=false`
+      url: `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&with_original_language=${language}&sort_by=popularity.desc&page=1&with_genres=${genre}&include_null_first_air_dates=false`
     };
     axios
       .request(options)
@@ -98,7 +123,7 @@ function FilterTV() {
       .catch(function (error) {
         console.error(error);
       });
-  }, [genre]);
+  }, [genre, language]);
   return (
     <div className="Favorite">
       <div className="container p-0">
@@ -121,13 +146,13 @@ function FilterTV() {
                         ))
                       : ""}
                   </select>
-                  <button
-                    className="btn btn-primary btn-filter"
-                    onClick={filter}
-                    type="submit"
-                  >
-                    Filter
-                  </button>
+                  <select onChange={(event) => setLanguage(event.target.value)}>
+                    {languageList
+                      ? languageList.map((item) => (
+                          <option value={item.value}>{item.name}</option>
+                        ))
+                      : ""}
+                  </select>
                 </div>
                 <div className="row">
                   {filterTV
