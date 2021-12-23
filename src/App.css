@@ -79,7 +79,7 @@ a:hover {
 }
 
 .movie_list {
-  margin-top: 90px;
+
   padding-left: 4rem !important;
 }
 
@@ -94,7 +94,7 @@ a:hover {
 }
 
 .card-header {
-  padding: 10px;
+  padding: 0px;
   margin: 0;
   height: 288px;
   width: 100%;
@@ -273,4 +273,66 @@ div.scrollmenu a {
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
+}
+/*header*/
+
+.header {
+  height: 44em;
+  margin-top: 7em;
+  padding: 25px 150px;
+  box-shadow: 0px -16px 43px 21px rgba(0, 0, 0, 0.6);
+  background: url(http://i.imgur.com/E33R3EK.jpg) no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+.header .details {
+  padding: 25px 0;
+  width: 45%;
+}
+.header .details .ratingHead {
+  display: inline-block;
+  font-size: 22px;
+  color: #ea292e;
+}
+.header .details .year, .header .details .seasons {
+  padding: 0 0 0 20px;
+  display: inline-block;
+  font-size: 20px;
+  color: rgba(255, 255, 255, .9);
+}
+.header .details .description {
+  padding: 25px 0 0 0;
+  font-size: 15px;
+  line-height: 26px;
+  color: rgba(255, 255, 255, .95);
+}
+.header .details .button {
+  margin: 25px 20px 0 0;
+}
+.button {
+  display: inline-block;
+  color: rgba(255, 255, 255, .9);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding: 13px 35px;
+  border-radius: 7px;
+}
+.button.red {
+  background: rgba(230, 45, 53, 0.5);
+}
+.button.red:hover {
+  background: rgba(230, 45, 53, 0.75);
+}
+.button.red:active {
+  background: rgba(230, 45, 53, 0.9);
+}
+.button.plain {
+  background: rgba(255, 255, 255, .15);
+}
+.button.plain:hover {
+  background: rgba(255, 255, 255, .3);
+}
+.button.plain:active {
+  background: rgba(255, 255, 255, .45);
 }
