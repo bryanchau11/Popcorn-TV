@@ -98,34 +98,6 @@ function App() {
       <div className="container p-0">
         <div className="container-fluid">
           <div className="row">
-            <div className="header">
-              <img src="https://occ-0-769-768.1.nflxso.net/art/ce656/e3fd62b85404247b2af4a16dc899095b50bce656.webp" />
-              <div className="details">
-                <div className="ratingHead">★★★★☆</div>
-                <div className="year">2017</div>
-                <div className="seasons">5 seasons</div>
-                <div className="description">
-                  House of Cards is an American political drama web television
-                  series created by Beau Willimon. It is an adaptation of the
-                  BBC's miniseries of the same name and is based on the novel by
-                  Michael Dobbs.
-                </div>
-                <a
-                  href="#play"
-                  className="button red"
-                  style={{ pointerEvents: "none" }}
-                >
-                  ▶ Play
-                </a>
-                <a
-                  href="#addtoList"
-                  className="button plain"
-                  style={{ pointerEvents: "none" }}
-                >
-                  ＋ My list
-                </a>
-              </div>
-            </div>
             <main
               role="main"
               className="movie_list"
