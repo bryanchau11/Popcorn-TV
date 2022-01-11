@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "./logo2.png";
+import React, { useState, useEffect, useRef } from "react"
+import { Link } from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css"
+import logo from "./logo2.png"
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import {
   Navbar,
   Nav,
@@ -12,232 +12,46 @@ import {
   Container,
   Form,
   Button,
-  FormControl
-} from "react-bootstrap";
-import "../style/Navbar.css";
+  FormControl,
+} from "react-bootstrap"
+import "../style/Navbar.css"
 function NavigationMenu() {
-  const [name, setName] = useState("");
-  const [flag, setFlag] = useState(true);
+  const [name, setName] = useState("")
+  const [flag, setFlag] = useState(true)
   useEffect(() => {
     fetch("/get_username", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => {
-        setName(data.username);
+        setName(data.username)
         if (data.username === "") {
-          setFlag(false);
+          setFlag(false)
         }
-      });
-  }, []);
+      })
+  }, [])
   const SmoothScroll = (id) => {
-    let element = document.getElementById(id);
-    element.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-  const textInput = useRef(null);
-  const navigate = useNavigate();
+    let element = document.getElementById(id)
+    element.scrollIntoView({ behavior: "smooth", block: "center" })
+  }
+  const textInput = useRef(null)
+  const navigate = useNavigate()
 
   const searchMovie = (event) => {
-    event.preventDefault();
-    const movieName = textInput.current.value;
+    event.preventDefault()
+    const movieName = textInput.current.value
     if (movieName !== "") {
-      navigate(`/search/${movieName}`);
+      navigate(`/search/${movieName}`)
     } else {
-      alert("Please enter name of movie");
+      alert("Please enter name of movie")
     }
-  };
+  }
 
   return (
     <>
-      {/**
-     * <nav
-      className="col-md-2 d-none d-md-block sidebar"
-      style={{ paddingTop: "50px", backgroundColor: "black" }}
-    >
-      <div
-        className="sidebar-sticky"
-        style={{ backgroundColor: "black", color: "white" }}
-      >
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <div className="nav-link" style={{ paddingTop: "50px" }}>
-              {flag ? <div>Welcome, {name}</div> : <div>Please login</div>}
-            </div>
-          </li>
-        </ul>
-
-        <hr />
-        <NavDropdown title="MOVIE">
-          <NavDropdown.Item>
-            <li className="nav-item">
-              <div className="nav-link">
-                <img
-                  src="https://img.icons8.com/ios/32/000000/video.png"
-                  alt=""
-                />
-                <div>
-                  <Link to="/">Popular Movies</Link>
-                </div>
-              </div>
-            </li>
-          </NavDropdown.Item>
-          <NavDropdown.Item>
-            <li className="nav-item">
-              <div className="nav-link">
-                <img
-                  src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
-                  alt=""
-                />
-                <div>
-                  <Link to="/top_rated">Top Rated Movies</Link>
-                </div>
-              </div>
-            </li>
-          </NavDropdown.Item>
-          <NavDropdown.Item>
-            <li className="nav-item">
-              <div className="nav-link">
-                <img
-                  src="https://img.icons8.com/ios/32/000000/filter--v1.png"
-                  alt=""
-                />
-                <div>
-                  <Link to="/filter">Filter Movies</Link>
-                </div>
-              </div>
-            </li>
-          </NavDropdown.Item>
-        </NavDropdown>
-
-        <hr />
-        <NavDropdown title="TV SHOWS">
-          <NavDropdown.Item>
-            <li className="nav-item">
-              <div className="nav-link">
-                <img
-                  src="https://img.icons8.com/ios/32/000000/video.png"
-                  alt=""
-                />
-                <div>
-                  <Link to="/popularTV">Popular TV Shows</Link>
-                </div>
-              </div>
-            </li>
-          </NavDropdown.Item>
-          <NavDropdown.Item>
-            <li className="nav-item">
-              <div className="nav-link">
-                <img
-                  src="https://img.icons8.com/external-prettycons-lineal-prettycons/32/000000/external-movie-multimedia-prettycons-lineal-prettycons-1.png"
-                  alt=""
-                />
-                <div>
-                  <Link to="/top_ratedTV">Top Rated TV Shows</Link>
-                </div>
-              </div>
-            </li>
-          </NavDropdown.Item>
-          <NavDropdown.Item>
-            <li className="nav-item">
-              <div className="nav-link">
-                <img
-                  src="https://img.icons8.com/ios/32/000000/filter--v1.png"
-                  alt=""
-                />
-                <div>
-                  <Link to="/filterTV">Filter TV Shows</Link>
-                </div>
-              </div>
-            </li>
-          </NavDropdown.Item>
-        </NavDropdown>
-
-        <hr />
-        <ul className="nav flex-column">
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/video.png"
-                alt=""
-              />
-              <div>
-                <Link to="/korean">Bryan's KOREAN TV Shows!!</Link>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <hr />
-
-        <ul className="nav flex-column mb-2">
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/material-outlined/32/FFFFFF/like--v1.png"
-                alt=""
-              />
-              <div>
-                <Link to="/favorite">Favorite Movies</Link>
-              </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/contact-card.png"
-                alt=""
-              />
-              <div>
-                <Link to="/contact">Contact</Link>
-              </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/settings.png"
-                alt=""
-              />
-              <div>
-                <Link to="/settings">Settings</Link>
-              </div>
-            </div>
-          </li>
-          <li className="nav-item">
-            <div className="nav-link">
-              <img
-                src="https://img.icons8.com/ios/32/FFFFFF/logout-rounded--v1.png"
-                alt=""
-              />
-              {flag ? (
-                <form action="/signout1" method="POST">
-                  <button
-                    className="signOut"
-                    type="submit"
-                    style={{ color: "white" }}
-                  >
-                    Sign out
-                  </button>
-                </form>
-              ) : (
-                <form action="/signout" method="POST">
-                  <button
-                    className="signOut"
-                    type="submit"
-                    style={{ color: "white" }}
-                  >
-                    Log In
-                  </button>
-                </form>
-              )}
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-     */}
       <Navbar
         collapseOnSelect
         expand="lg"
@@ -310,6 +124,12 @@ function NavigationMenu() {
                   Separated link
                 </NavDropdown.Item>
               </NavDropdown>
+              <a href="https://www.buymeacoffee.com/popcorntv">
+                <img
+                  alt=""
+                  src="https://img.buymeacoffee.com/button-api/?text=Buy me a popcorn&emoji=🍿&slug=popcorntv&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
+                />
+              </a>
             </Nav>
             <Nav className="ms-auto">
               <Button as={Link} to="/korean" variant="warning">
@@ -354,7 +174,7 @@ function NavigationMenu() {
         </Container>
       </Navbar>
     </>
-  );
+  )
 }
 
-export default NavigationMenu;
+export default NavigationMenu
