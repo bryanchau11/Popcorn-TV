@@ -5,9 +5,8 @@ import { HashLink } from "react-router-hash-link";
 //import ReactStars from "react-rating-stars-component";
 import "../../style/Detail.css";
 import "../../style/bootstrap.min.css";
-//import "../../App.css";
-//import SearchBar from "../SearchBar";
-//import NavigationMenu from "../NavigationMenu";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import axios from "axios";
 
 function DetailTV() {
@@ -533,6 +532,12 @@ function DetailTV() {
                   className="responsive-iframe"
                 />
               </div>
+              <Button variant="success" onClick={() => setEpisode(episode - 1)}>
+                Back episode
+              </Button>
+              <Button variant="success" onClick={() => setEpisode(episode + 1)}>
+                Next episode
+              </Button>
             </div>
           </div>
           {/** CAST DETAILS */}
@@ -559,30 +564,7 @@ function DetailTV() {
               </div>
             </div>
           </div>
-          {/** 
-          <div className="col-xs-12 cardcont nopadding">
-            <div className="wrapper slick-slider">
-              <h3>Images</h3>
 
-              <div class="slider">
-                <div class="slide-track">
-                  {imageList.length === 0
-                    ? ""
-                    : imageList.map((item) => (
-                        <div class="slide">
-                          <img
-                            src={item.stills}
-                            alt=""
-                            className="img-responsive"
-                            id="movie-summary-img"
-                          />
-                        </div>
-                      ))}
-                </div>
-              </div>
-            </div>
-          </div>
-           */}
           <div className="col-xs-12 cardcont nopadding">
             <div className="wrapper">
               <h3>COMMENT</h3>
